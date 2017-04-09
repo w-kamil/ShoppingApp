@@ -24,7 +24,7 @@
         android:layout_height="80dp"
         android:background="?attr/selectableItemBackground"
         android:gravity="center"
-        android:text="@string/scan_product"
+        android:text="@string/scan_product_upper_case"
         android:textSize="20sp"
         tools:text="SCANNER" />
 
