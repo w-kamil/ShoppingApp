@@ -13,13 +13,23 @@ import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
 
+    private String scanResult;
+    private static final String SCAN_RESULT_KEY = "scanResultKey";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        if (savedInstanceState != null) {
+            scanResult = savedInstanceState.getString(SCAN_RESULT_KEY);
+        }
+    }
 
-
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(SCAN_RESULT_KEY, scanResult);
     }
 
     @Override
@@ -30,32 +40,30 @@ public class MainActivity extends AppCompatActivity {
             if (intentResult.getContents() == null) {
                 Toast.makeText(this, R.string.scan_cancelled, Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(this, "scanned: " + intentResult.getContents(), Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Wynik skanu: " + intentResult.getContents(), Toast.LENGTH_LONG).show();
+                scanResult = intentResult.getContents();
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
 
-    @OnClick(R.id.goto_scanner_textview)
+    @OnClick(R.id.goto_scanner)
     void startScanner() {
-        Toast.makeText(this, getString(R.string.scan_product), Toast.LENGTH_SHORT).show();
-
         IntentIntegrator integrator = new IntentIntegrator(this);
         integrator.setDesiredBarcodeFormats(IntentIntegrator.PRODUCT_CODE_TYPES);
         integrator.setPrompt(getString(R.string.scan_product));
-        integrator.setCameraId(0);  // Use a specific camera of the device
-        integrator.setBeepEnabled(false);
-        integrator.setBarcodeImageEnabled(true);
+        integrator.setBeepEnabled(true);
+        integrator.setBarcodeImageEnabled(false);
         integrator.initiateScan();
     }
 
-    @OnClick(R.id.goto_shops_textview)
+    @OnClick(R.id.goto_shops)
     void startShopsActivity() {
         Toast.makeText(this, "lista sklepów", Toast.LENGTH_SHORT).show();
     }
 
-    @OnClick(R.id.goto_products_textview)
+    @OnClick(R.id.goto_products)
     void gotoProductsActivity() {
         Toast.makeText(this, "lista produktów", Toast.LENGTH_SHORT).show();
     }
