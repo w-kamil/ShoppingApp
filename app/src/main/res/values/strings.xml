@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Shopping</string>
-    <string name="scan_product">SKANUJ PRODUKT</string>
+    <string name="scan_product_upper_case">SKANUJ PRODUKT</string>
     <string name="shops_list">LISTA SKLEPÓW</string>
     <string name="products_list">LISTA PRODUKTÓW</string>
+    <string name="scan_cancelled">Anulowano skanowanie</string>
+    <string name="scan_product">Skanuj produkt</string>
 </resources>
