@@ -1,10 +1,15 @@
 package com.github.w_kamil.shoppingapp;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Toast;
 
+import com.github.w_kamil.shoppingapp.dao.DbHelper;
+import com.github.w_kamil.shoppingapp.dao.ShoppingDatabaseContract;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -27,6 +32,17 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState != null) {
             scanResult = savedInstanceState.getString(SCAN_RESULT_KEY);
         }
+
+        //TODO delete hese lines - used only for test of DbHelper
+        DbHelper dbHelper = new DbHelper(this);
+        SQLiteDatabase database = dbHelper.getReadableDatabase();
+        Cursor cursor = database.query(ShoppingDatabaseContract.ShopsEntry.TABLE,ShoppingDatabaseContract.COLUMNS_NAMES_SHOPS,null, null, null, null, null);
+        if(cursor.moveToFirst()){
+            String cursorResult = cursor.getString(1);
+            Log.d("CURSOR RESULT", cursorResult);
+        }
+
+
     }
 
     @Override

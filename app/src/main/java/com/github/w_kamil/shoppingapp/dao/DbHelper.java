@@ -1,13 +1,14 @@
 package com.github.w_kamil.shoppingapp.dao;
 
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class DbHelper extends SQLiteOpenHelper {
 
-    //TODO check onCreate method, keys (choose _id's or identifiers for tables joins?)
+    //TODO ckeys (choose _id's or identifiers more useful for tables joins?)
 
 
     public DbHelper(Context context) {
@@ -18,22 +19,29 @@ public class DbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String createProductsTable = "CREATE TABLE " + ShoppingDatabaseContract.ProductsEntry.TABLE + " ("
                 + ShoppingDatabaseContract.ProductsEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + ShoppingDatabaseContract.ProductsEntry.COL_PRODUUCTS_BARCODE + " TEXT UNIQUE,"
+                + ShoppingDatabaseContract.ProductsEntry.COL_PRODUUCTS_BARCODE + " TEXT NOT NULL UNIQUE,"
                 + ShoppingDatabaseContract.ProductsEntry.COL_PRODUCTS_DESCRIPTION + " TEXT);";
         String createShopsTable = "CREATE TABLE " + ShoppingDatabaseContract.ShopsEntry.TABLE + " ("
                 + ShoppingDatabaseContract.ShopsEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + ShoppingDatabaseContract.ShopsEntry.COL_SHOP_IDENTIFIER + " TEXT UNIQUE, "
+                + ShoppingDatabaseContract.ShopsEntry.COL_SHOP_IDENTIFIER + " TEXT NOT NULL UNIQUE, "
                 + ShoppingDatabaseContract.ShopsEntry.COL_SHOP_ADDRESS + " TEXT);";
         String createMainTable = "CREATE TABLE " + ShoppingDatabaseContract.MainTableEntry.TABLE + " ("
                 + ShoppingDatabaseContract.MainTableEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + ShoppingDatabaseContract.MainTableEntry.COL_MAIN_DATE + " NUMERIC, "
-                + ShoppingDatabaseContract.MainTableEntry.COL_MAIN_PRICE + " TEXT, "
-                + ShoppingDatabaseContract.ProductsEntry._ID + " INTEGER FOREIGN KEY, "
-                + ShoppingDatabaseContract.ShopsEntry._ID + " INTEGER FOREING KEY);";
+                + ShoppingDatabaseContract.MainTableEntry.COL_MAIN_DATE + " NUMERIC NOT NULL, "
+                + ShoppingDatabaseContract.MainTableEntry.COL_MAIN_PRICE + " TEXT NOT NULL, "
+                + ShoppingDatabaseContract.MainTableEntry.PRODUTCS_ID + " INTEGER NOT NULL, "
+                + ShoppingDatabaseContract.MainTableEntry.SHOPS_ID + " INTEGER NOT NULL, "
+                + "FOREIGN KEY (" + ShoppingDatabaseContract.MainTableEntry.PRODUTCS_ID + ") REFERENCES " + ShoppingDatabaseContract.ProductsEntry.TABLE + " (" + ShoppingDatabaseContract.ProductsEntry._ID + "), "
+                + "FOREIGN KEY (" + ShoppingDatabaseContract.MainTableEntry.SHOPS_ID + ") REFERENCES " + ShoppingDatabaseContract.ShopsEntry.TABLE + " (" + ShoppingDatabaseContract.ShopsEntry._ID + "));";
 
         db.execSQL(createProductsTable);
         db.execSQL(createShopsTable);
         db.execSQL(createMainTable);
+
+        //TODO delete these lines - used only for DbHelper test
+        ContentValues values = new ContentValues();
+        values.put(ShoppingDatabaseContract.ShopsEntry.COL_SHOP_IDENTIFIER, "abc");
+        db.insert(ShoppingDatabaseContract.ShopsEntry.TABLE, null, values);
     }
 
     @Override

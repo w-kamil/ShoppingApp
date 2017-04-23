@@ -28,17 +28,17 @@ public class ShoppingDatabaseDao implements IShoppingDatabaseDao {
     }
 
     @Override
-    public List<Product> fetchAllProductsMachingSpecificShopIdentifier(String indentifier) {
+    public List<Product> fetchAllProductsMatchingSpecificShop(Shop shop) {
         return null;
     }
 
     @Override
-    public List<Shop> fetchsAllShops() {
+    public List<Shop> fetchAllShops() {
         return null;
     }
 
     @Override
-    public List<Shopping> fetchShoppingMatchingSpecfingBarcode(String barcode) {
+    public List<Shopping> fetchAllShoppingItemsMatchingSpecificProduct(Product product) {
         return null;
     }
 
@@ -63,7 +63,12 @@ public class ShoppingDatabaseDao implements IShoppingDatabaseDao {
     }
 
     @Override
-    public boolean addShopping(Shopping shopping) {
+    public boolean addShopping(Shopping singleShoppingItem) {
+        return false;
+    }
+
+    @Override
+    public boolean deleteShopping(Shopping singleShoppingItem) {
         return false;
     }
 

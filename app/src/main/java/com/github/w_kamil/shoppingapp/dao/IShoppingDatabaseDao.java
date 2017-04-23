@@ -6,12 +6,13 @@ import java.util.List;
 public interface IShoppingDatabaseDao {
 
     List<Product> fetchAllProducts();
-    List<Product> fetchAllProductsMachingSpecificShopIdentifier(String indentifier);
-    List<Shop> fetchsAllShops();
-    List<Shopping> fetchShoppingMatchingSpecfingBarcode(String barcode);
+    List<Product> fetchAllProductsMatchingSpecificShop(Shop shop);
+    List<Shop> fetchAllShops();
+    List<Shopping> fetchAllShoppingItemsMatchingSpecificProduct(Product product);
     boolean addProduct(Product product);
     boolean deleteProduct(Product product);
     boolean addShop(Shop shop);
     boolean deleteShop(Shop shop);
-    boolean addShopping(Shopping shopping);
+    boolean addShopping(Shopping singleShoppingItem);
+    boolean deleteShopping (Shopping singleShoppingItem);
 }

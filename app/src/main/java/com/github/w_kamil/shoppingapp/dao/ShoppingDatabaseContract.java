@@ -13,7 +13,6 @@ public class ShoppingDatabaseContract {
         public static final String TABLE = "products";
         public static final String COL_PRODUUCTS_BARCODE = "barcode";
         public static final String COL_PRODUCTS_DESCRIPTION = "description";
-
     }
 
     public class ShopsEntry implements BaseColumns {
@@ -26,10 +25,11 @@ public class ShoppingDatabaseContract {
         public static final String TABLE = "main";
         public static final String COL_MAIN_DATE = "main_date";
         public static final String COL_MAIN_PRICE = "main_price";
+        public static final String PRODUTCS_ID = "products_id";
+        public static final String SHOPS_ID = "shops_id";
     }
 
     public static String[] COLUMNS_NAMES_PRODUCTS = {ProductsEntry._ID, ProductsEntry.COL_PRODUUCTS_BARCODE, ProductsEntry.COL_PRODUCTS_DESCRIPTION};
     public static String[] COLUMNS_NAMES_SHOPS = {ShopsEntry._ID, ShopsEntry.COL_SHOP_IDENTIFIER, ShopsEntry.COL_SHOP_ADDRESS};
     public static String[] COLUMNS_NAMES_MAIN_TABLE = {MainTableEntry._ID, MainTableEntry.COL_MAIN_DATE, MainTableEntry.COL_MAIN_PRICE, ProductsEntry._ID, ShopsEntry._ID};
-
 }
