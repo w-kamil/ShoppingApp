@@ -3,7 +3,7 @@ package com.github.w_kamil.shoppingapp.dao;
 
 import android.provider.BaseColumns;
 
-public class ShoppingDatabaseContract {
+public class    ShoppingDatabaseContract {
 
     public static final String DB_NAME = "shoppingDb";
     public static final int DB_VERSION = 1;
