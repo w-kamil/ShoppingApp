@@ -10,7 +10,7 @@ public class DbHelper extends SQLiteOpenHelper {
     //TODO check onCreate method, keys (choose _id's or identifiers for tables joins?)
 
 
-    public DbHelper(Context context, String name, int version) {
+    public DbHelper(Context context) {
         super(context, ShoppingDatabaseContract.DB_NAME, null, ShoppingDatabaseContract.DB_VERSION);
     }
 

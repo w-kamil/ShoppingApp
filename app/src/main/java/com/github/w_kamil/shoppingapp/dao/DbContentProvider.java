@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 public class DbContentProvider {
 
-    //TODO imlement database and openheper objects
+    //TODO delete this class if dao with inner class works
 
     SQLiteDatabase db;
 
