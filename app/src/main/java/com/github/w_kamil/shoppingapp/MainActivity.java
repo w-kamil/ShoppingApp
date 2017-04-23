@@ -13,7 +13,8 @@ import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
 
-    //TODO consider fragment implementation for single product in mainactivity
+    //TODO implement AsynsTask class
+
 
     private String scanResult;
     private static final String SCAN_RESULT_KEY = "scanResultKey";
