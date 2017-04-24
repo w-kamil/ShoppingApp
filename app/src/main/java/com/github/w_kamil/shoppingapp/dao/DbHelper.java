@@ -28,7 +28,7 @@ public class DbHelper extends SQLiteOpenHelper {
         String createMainTable = "CREATE TABLE " + ShoppingDatabaseContract.MainTableEntry.TABLE + " ("
                 + ShoppingDatabaseContract.MainTableEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + ShoppingDatabaseContract.MainTableEntry.COL_MAIN_DATE + " NUMERIC NOT NULL, "
-                + ShoppingDatabaseContract.MainTableEntry.COL_MAIN_PRICE + " TEXT NOT NULL, "
+                + ShoppingDatabaseContract.MainTableEntry.COL_MAIN_PRICE + " REAL NOT NULL, "
                 + ShoppingDatabaseContract.MainTableEntry.PRODUTCS_ID + " INTEGER NOT NULL, "
                 + ShoppingDatabaseContract.MainTableEntry.SHOPS_ID + " INTEGER NOT NULL, "
                 + "FOREIGN KEY (" + ShoppingDatabaseContract.MainTableEntry.PRODUTCS_ID + ") REFERENCES " + ShoppingDatabaseContract.ProductsEntry.TABLE + " (" + ShoppingDatabaseContract.ProductsEntry._ID + "), "

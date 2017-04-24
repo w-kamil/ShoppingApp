@@ -11,15 +11,11 @@ import java.util.List;
 
 public class ShoppingDatabaseDao implements IShoppingDatabaseDao {
 
-    //TODO implement dao methods
+    //TODO implement dao methods, close database and cursor
     SQLiteOpenHelper dbHelper;
-    SQLiteDatabase readabledatabase;
-    SQLiteDatabase writeabledatabase;
 
-    protected ShoppingDatabaseDao(Context context) {
+    public ShoppingDatabaseDao(Context context) {
         this.dbHelper = new DbHelper(context);
-        writeabledatabase = dbHelper.getWritableDatabase();
-        readabledatabase = dbHelper.getReadableDatabase();
     }
 
     @Override
@@ -69,14 +65,18 @@ public class ShoppingDatabaseDao implements IShoppingDatabaseDao {
 
     @Override
     public boolean deleteShopping(Shopping singleShoppingItem) {
+
         return false;
     }
 
 
     private class DbContentProvider {
 
+        SQLiteDatabase database;
+        
         protected Cursor query(String tableName, String[] columnNames) {
-            return readabledatabase.query(
+            database = dbHelper.getReadableDatabase();
+            return database.query(
                     tableName,
                     columnNames,
                     null, null, null, null, null);
@@ -84,21 +84,21 @@ public class ShoppingDatabaseDao implements IShoppingDatabaseDao {
         }
 
         protected boolean insert(String tableName, ContentValues values) {
+            database = dbHelper.getWritableDatabase();
 
-
-            return (writeabledatabase.insertWithOnConflict(
+            return (database.insertWithOnConflict(
                     tableName,
                     null, values, SQLiteDatabase.CONFLICT_REPLACE) > -1);
         }
 
         protected boolean delete(String tableName, String selectionString, String[] selectionArgs) {
-            return (writeabledatabase.delete(
+            database = dbHelper.getWritableDatabase();
+
+            return (database.delete(
                     tableName,
                     selectionString,
                     selectionArgs) > 0);
         }
 
     }
-
-
 }
