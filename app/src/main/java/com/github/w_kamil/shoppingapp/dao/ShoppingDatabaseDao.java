@@ -3,7 +3,6 @@ package com.github.w_kamil.shoppingapp.dao;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -11,7 +10,6 @@ import android.database.sqlite.SQLiteQueryBuilder;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class ShoppingDatabaseDao implements IShoppingDatabaseDao {
@@ -191,7 +189,7 @@ public class ShoppingDatabaseDao implements IShoppingDatabaseDao {
         return  new DbContentProvider().delete(ShoppingDatabaseContract.MainTableEntry.TABLE, ShoppingDatabaseContract.MainTableEntry._ID,
                 new String[]{singleShoppingItem.getId()});
     }
-    
+
     private class DbContentProvider {
 
         SQLiteDatabase database;
