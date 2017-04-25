@@ -44,11 +44,11 @@ public class ShoppingDatabaseDao implements IShoppingDatabaseDao {
 //        optional tables statemtent to be checked
 //        String tablesNamesOptional = ShoppingDatabaseContract.ProductsEntry.TABLE + " JOIN " + ShoppingDatabaseContract.MainTableEntry.TABLE
 //                + " ON (" + ShoppingDatabaseContract.ProductsEntry.TABLE + "." + ShoppingDatabaseContract.ProductsEntry._ID + " = "
-//                + ShoppingDatabaseContract.MainTableEntry.TABLE + "." + ShoppingDatabaseContract.MainTableEntry.COL_PRODUTCS_ID + " );" ;
+//                + ShoppingDatabaseContract.MainTableEntry.TABLE + "." + ShoppingDatabaseContract.MainTableEntry.COL_PRODUTC_BARCODE + " );" ;
 
         String[] colunmsNames = {ShoppingDatabaseContract.ProductsEntry.TABLE + "." + ShoppingDatabaseContract.ProductsEntry.COL_PRODUUCTS_BARCODE,
                 ShoppingDatabaseContract.ProductsEntry.TABLE + "." + ShoppingDatabaseContract.ProductsEntry.COL_PRODUCTS_DESCRIPTION};
-        String selection = ShoppingDatabaseContract.MainTableEntry.TABLE + "." + ShoppingDatabaseContract.MainTableEntry.COL_SHOPS_ID + " = ?";
+        String selection = ShoppingDatabaseContract.MainTableEntry.TABLE + "." + ShoppingDatabaseContract.MainTableEntry.COL_SHOP_IDENTIFIER + " = ?";
         String[] selectionArgs = {String.valueOf(shop.getId())};
         Cursor cursor = new DbContentProvider().joinQuery(tablesNames, colunmsNames, selection, selectionArgs);
         List<Product> productsList = new ArrayList<>();
@@ -88,15 +88,15 @@ public class ShoppingDatabaseDao implements IShoppingDatabaseDao {
 //        optional tables statemtent to be checked
 //        String tablesNamesOptional = ShoppingDatabaseContract.MainTableEntry.TABLE + " JOIN " + ShoppingDatabaseContract.ShopsEntry.TABLE
 //                + " ON (" + ShoppingDatabaseContract.ProductsEntry.TABLE + "." + ShoppingDatabaseContract.ProductsEntry._ID + " = "
-//                + ShoppingDatabaseContract.MainTableEntry.TABLE + "." + ShoppingDatabaseContract.MainTableEntry.COL_PRODUTCS_ID + ");";
+//                + ShoppingDatabaseContract.MainTableEntry.TABLE + "." + ShoppingDatabaseContract.MainTableEntry.COL_PRODUTC_BARCODE + ");";
 
         String[] colunmsNames = {ShoppingDatabaseContract.MainTableEntry.TABLE + "." + ShoppingDatabaseContract.MainTableEntry.COL_MAIN_DATE,
                 ShoppingDatabaseContract.MainTableEntry.TABLE + "." + ShoppingDatabaseContract.MainTableEntry.COL_MAIN_PRICE,
-                ShoppingDatabaseContract.MainTableEntry.TABLE + "." + ShoppingDatabaseContract.MainTableEntry.COL_PRODUTCS_ID,
-                ShoppingDatabaseContract.MainTableEntry.TABLE + "." + ShoppingDatabaseContract.MainTableEntry.COL_SHOPS_ID};
+                ShoppingDatabaseContract.MainTableEntry.TABLE + "." + ShoppingDatabaseContract.MainTableEntry.COL_PRODUTC_BARCODE,
+                ShoppingDatabaseContract.MainTableEntry.TABLE + "." + ShoppingDatabaseContract.MainTableEntry.COL_SHOP_IDENTIFIER};
 
 
-        String selection = ShoppingDatabaseContract.MainTableEntry.TABLE + "." + ShoppingDatabaseContract.MainTableEntry.COL_PRODUTCS_ID + " = ?";
+        String selection = ShoppingDatabaseContract.MainTableEntry.TABLE + "." + ShoppingDatabaseContract.MainTableEntry.COL_PRODUTC_BARCODE + " = ?";
         Cursor productCursor = new DbContentProvider().query(ShoppingDatabaseContract.ProductsEntry.TABLE, new String[]{ShoppingDatabaseContract.ProductsEntry._ID},
                 ShoppingDatabaseContract.ProductsEntry.COL_PRODUUCTS_BARCODE + " = ?", new String[]{product.getBarCode()});
         String[] selectionArgs = new String[1];
@@ -112,7 +112,7 @@ public class ShoppingDatabaseDao implements IShoppingDatabaseDao {
             int procuctId = cursor.getInt(indexId);
             int indexDate = cursor.getColumnIndex(ShoppingDatabaseContract.MainTableEntry.COL_MAIN_DATE);
             String date = cursor.getString(indexDate);
-            int indexShopId = cursor.getColumnIndex(ShoppingDatabaseContract.MainTableEntry.COL_SHOPS_ID);
+            int indexShopId = cursor.getColumnIndex(ShoppingDatabaseContract.MainTableEntry.COL_SHOP_IDENTIFIER);
             String shopId = cursor.getString(indexShopId);
             int indexPrice = cursor.getColumnIndex(ShoppingDatabaseContract.MainTableEntry.COL_MAIN_PRICE);
             BigDecimal price = new BigDecimal(cursor.getString(indexPrice));
@@ -173,13 +173,13 @@ public class ShoppingDatabaseDao implements IShoppingDatabaseDao {
                 ShoppingDatabaseContract.ProductsEntry.COL_PRODUUCTS_BARCODE, new String[]{singleShoppingItem.getBarCode()});
         if (productCursor.moveToFirst()) {
             String productId = productCursor.getString(productCursor.getColumnIndex(ShoppingDatabaseContract.ProductsEntry._ID));
-            contentValues.put(ShoppingDatabaseContract.MainTableEntry.COL_PRODUTCS_ID, productId);
+            contentValues.put(ShoppingDatabaseContract.MainTableEntry.COL_PRODUTC_BARCODE, productId);
         }
         Cursor shopCusror = new DbContentProvider().query(ShoppingDatabaseContract.ShopsEntry.TABLE, ShoppingDatabaseContract.COLUMNS_NAMES_SHOPS,
                 ShoppingDatabaseContract.ShopsEntry.COL_SHOP_IDENTIFIER, new String[]{singleShoppingItem.getShopIdentifier()});
         if (shopCusror.moveToFirst()) {
             String shopId = shopCusror.getString(productCursor.getColumnIndex(ShoppingDatabaseContract.ShopsEntry._ID));
-            contentValues.put(ShoppingDatabaseContract.MainTableEntry.COL_SHOPS_ID, shopId);
+            contentValues.put(ShoppingDatabaseContract.MainTableEntry.COL_SHOP_IDENTIFIER, shopId);
         }
         return new DbContentProvider().insert(ShoppingDatabaseContract.MainTableEntry.TABLE, contentValues);
     }

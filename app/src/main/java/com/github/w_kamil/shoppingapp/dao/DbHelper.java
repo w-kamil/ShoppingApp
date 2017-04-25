@@ -29,10 +29,10 @@ public class DbHelper extends SQLiteOpenHelper {
                 + ShoppingDatabaseContract.MainTableEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + ShoppingDatabaseContract.MainTableEntry.COL_MAIN_DATE + " TEXT NOT NULL, "
                 + ShoppingDatabaseContract.MainTableEntry.COL_MAIN_PRICE + " TEXT NOT NULL, "
-                + ShoppingDatabaseContract.MainTableEntry.COL_PRODUTCS_ID + " INTEGER NOT NULL, "
-                + ShoppingDatabaseContract.MainTableEntry.COL_SHOPS_ID + " INTEGER NOT NULL, "
-                + "FOREIGN KEY (" + ShoppingDatabaseContract.MainTableEntry.COL_PRODUTCS_ID + ") REFERENCES " + ShoppingDatabaseContract.ProductsEntry.TABLE + " (" + ShoppingDatabaseContract.ProductsEntry._ID + "), "
-                + "FOREIGN KEY (" + ShoppingDatabaseContract.MainTableEntry.COL_SHOPS_ID + ") REFERENCES " + ShoppingDatabaseContract.ShopsEntry.TABLE + " (" + ShoppingDatabaseContract.ShopsEntry._ID + "));";
+                + ShoppingDatabaseContract.MainTableEntry.COL_PRODUTC_BARCODE + " INTEGER NOT NULL, "
+                + ShoppingDatabaseContract.MainTableEntry.COL_SHOP_IDENTIFIER + " INTEGER NOT NULL, "
+                + "FOREIGN KEY (" + ShoppingDatabaseContract.MainTableEntry.COL_PRODUTC_BARCODE + ") REFERENCES " + ShoppingDatabaseContract.ProductsEntry.TABLE + " (" + ShoppingDatabaseContract.ProductsEntry._ID + "), "
+                + "FOREIGN KEY (" + ShoppingDatabaseContract.MainTableEntry.COL_SHOP_IDENTIFIER + ") REFERENCES " + ShoppingDatabaseContract.ShopsEntry.TABLE + " (" + ShoppingDatabaseContract.ShopsEntry._ID + "));";
 
         db.execSQL(createProductsTable);
         db.execSQL(createShopsTable);
