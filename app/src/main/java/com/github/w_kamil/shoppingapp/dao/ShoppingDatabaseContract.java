@@ -25,8 +25,8 @@ public class ShoppingDatabaseContract {
         public static final String TABLE = "main";
         public static final String COL_MAIN_DATE = "main_date";
         public static final String COL_MAIN_PRICE = "main_price";
-        public static final String PRODUTCS_ID = "products_id";
-        public static final String SHOPS_ID = "shops_id";
+        public static final String COL_PRODUTCS_ID = "products_id";
+        public static final String COL_SHOPS_ID = "shops_id";
     }
 
     public static String[] COLUMNS_NAMES_PRODUCTS = {ProductsEntry._ID, ProductsEntry.COL_PRODUUCTS_BARCODE, ProductsEntry.COL_PRODUCTS_DESCRIPTION};

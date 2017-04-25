@@ -27,12 +27,12 @@ public class DbHelper extends SQLiteOpenHelper {
                 + ShoppingDatabaseContract.ShopsEntry.COL_SHOP_ADDRESS + " TEXT);";
         String createMainTable = "CREATE TABLE " + ShoppingDatabaseContract.MainTableEntry.TABLE + " ("
                 + ShoppingDatabaseContract.MainTableEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + ShoppingDatabaseContract.MainTableEntry.COL_MAIN_DATE + " NUMERIC NOT NULL, "
-                + ShoppingDatabaseContract.MainTableEntry.COL_MAIN_PRICE + " REAL NOT NULL, "
-                + ShoppingDatabaseContract.MainTableEntry.PRODUTCS_ID + " INTEGER NOT NULL, "
-                + ShoppingDatabaseContract.MainTableEntry.SHOPS_ID + " INTEGER NOT NULL, "
-                + "FOREIGN KEY (" + ShoppingDatabaseContract.MainTableEntry.PRODUTCS_ID + ") REFERENCES " + ShoppingDatabaseContract.ProductsEntry.TABLE + " (" + ShoppingDatabaseContract.ProductsEntry._ID + "), "
-                + "FOREIGN KEY (" + ShoppingDatabaseContract.MainTableEntry.SHOPS_ID + ") REFERENCES " + ShoppingDatabaseContract.ShopsEntry.TABLE + " (" + ShoppingDatabaseContract.ShopsEntry._ID + "));";
+                + ShoppingDatabaseContract.MainTableEntry.COL_MAIN_DATE + " TEXT NOT NULL, "
+                + ShoppingDatabaseContract.MainTableEntry.COL_MAIN_PRICE + " TEXT NOT NULL, "
+                + ShoppingDatabaseContract.MainTableEntry.COL_PRODUTCS_ID + " INTEGER NOT NULL, "
+                + ShoppingDatabaseContract.MainTableEntry.COL_SHOPS_ID + " INTEGER NOT NULL, "
+                + "FOREIGN KEY (" + ShoppingDatabaseContract.MainTableEntry.COL_PRODUTCS_ID + ") REFERENCES " + ShoppingDatabaseContract.ProductsEntry.TABLE + " (" + ShoppingDatabaseContract.ProductsEntry._ID + "), "
+                + "FOREIGN KEY (" + ShoppingDatabaseContract.MainTableEntry.COL_SHOPS_ID + ") REFERENCES " + ShoppingDatabaseContract.ShopsEntry.TABLE + " (" + ShoppingDatabaseContract.ShopsEntry._ID + "));";
 
         db.execSQL(createProductsTable);
         db.execSQL(createShopsTable);

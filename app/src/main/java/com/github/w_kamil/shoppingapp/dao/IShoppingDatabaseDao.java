@@ -10,9 +10,9 @@ public interface IShoppingDatabaseDao {
     List<Shop> fetchAllShops();
     List<Shopping> fetchAllShoppingItemsMatchingSpecificProduct(Product product);
     long addProduct(Product product);
-    boolean deleteProduct(Product product);
-    boolean addShop(Shop shop);
-    boolean deleteShop(Shop shop);
-    boolean addShopping(Shopping singleShoppingItem);
-    boolean deleteShopping (Shopping singleShoppingItem);
+    int deleteProduct(Product product);
+    long addShop(Shop shop);
+    int deleteShop(Shop shop);
+    long addShopping(Shopping singleShoppingItem);
+    int deleteShopping (Shopping singleShoppingItem);
 }
