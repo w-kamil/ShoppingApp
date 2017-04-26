@@ -1,5 +1,6 @@
 package com.github.w_kamil.shoppingapp;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -10,6 +11,8 @@ import android.widget.Toast;
 
 import com.github.w_kamil.shoppingapp.dao.DbHelper;
 import com.github.w_kamil.shoppingapp.dao.Product;
+import com.github.w_kamil.shoppingapp.dao.Shop;
+import com.github.w_kamil.shoppingapp.dao.Shopping;
 import com.github.w_kamil.shoppingapp.dao.ShoppingDatabaseContract;
 import com.github.w_kamil.shoppingapp.dao.ShoppingDatabaseDao;
 import com.github.w_kamil.shoppingapp.products.ProductsActivity;
@@ -17,6 +20,8 @@ import com.github.w_kamil.shoppingapp.shops.ShopsActivity;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -38,6 +43,29 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState != null) {
             scanResult = savedInstanceState.getString(SCAN_RESULT_KEY);
         }
+
+
+        //TODO delete these lines - used only for test, handle multiplied unique values exception
+        ShoppingDatabaseDao dao = new ShoppingDatabaseDao(this);
+//        dao.addProduct(new Product("59045", "ser"));
+//        dao.addProduct(new Product("59045", "ser"));
+//        dao.addProduct(new Product("59046", "ser"));
+        dao.fetchAllProducts();
+//        dao.deleteProduct(new Product("59046", "ser"));
+//        dao.deleteProduct(new Product("59045", "ser"));
+
+//        dao.addShop(new Shop("abc", "warszawa"));
+//        dao.addShop(new Shop("abc", "warszawa"));
+//        dao.addShop(new Shop("abcD", "warszawa"));
+        dao.fetchAllShops();
+//        dao.deleteShop("abc");
+
+        dao.addShopping(new Shopping("1", "59045", "abc", new Date(), new BigDecimal(10)));
+        dao.addShopping(new Shopping("1", "59045", "abc", new Date(), new BigDecimal(10)));
+        dao.fetchAllProductsMatchingSpecificShop("abc");
+        dao.fetchAllShoppingItemsMatchingSpecificProduct("59046");
+
+
     }
 
     @Override

@@ -46,17 +46,13 @@ public class ShoppingDatabaseDao implements IShoppingDatabaseDao {
     }
 
     @Override
-    public List<Product> fetchAllProductsMatchingSpecificShop(Shop shop) {
+    public List<Product> fetchAllProductsMatchingSpecificShop(String shopIdentifier) {
         database = dbHelper.getReadableDatabase();
         String tablesNames = ShoppingDatabaseContract.ProductsEntry.TABLE + ", " + ShoppingDatabaseContract.MainTableEntry.TABLE;
-//        optional tables statemtent to be checked
-//        String tablesNamesOptional = ShoppingDatabaseContract.ProductsEntry.TABLE + " JOIN " + ShoppingDatabaseContract.MainTableEntry.TABLE
-//                + " ON (" + ShoppingDatabaseContract.ProductsEntry.TABLE + "." + ShoppingDatabaseContract.ProductsEntry._ID + " = "
-//                + ShoppingDatabaseContract.MainTableEntry.TABLE + "." + ShoppingDatabaseContract.MainTableEntry.COL_PRODUCT_BARCODE + " );" ;
 
         String[] colunmsNames = ShoppingDatabaseContract.COLUMNS_NAMES_PRODUCTS_LONG;
         String selection = ShoppingDatabaseContract.MainTableEntry.TABLE + "." + ShoppingDatabaseContract.MainTableEntry.COL_SHOP_IDENTIFIER + " = ?";
-        String[] selectionArgs = {String.valueOf(shop.getId())};
+        String[] selectionArgs = {shopIdentifier};
         cursor = new DbContentProvider().joinQuery(tablesNames, colunmsNames, selection, selectionArgs);
         List<Product> productsList = new ArrayList<>();
         while (cursor.moveToNext()) {
@@ -85,7 +81,7 @@ public class ShoppingDatabaseDao implements IShoppingDatabaseDao {
             String shopIndentifier = cursor.getString(indexIdentifier);
             int inndexAddress = cursor.getColumnIndex(ShoppingDatabaseContract.ShopsEntry.COL_SHOP_ADDRESS);
             String shopAddress = cursor.getString(inndexAddress);
-            shopsList.add(new Shop(shopId, shopIndentifier, shopAddress));
+            shopsList.add(new Shop(shopIndentifier, shopAddress));
         }
         cursor.close();
         database.close();
@@ -95,10 +91,10 @@ public class ShoppingDatabaseDao implements IShoppingDatabaseDao {
 
 
     @Override
-    public List<Shopping> fetchAllShoppingItemsMatchingSpecificProduct(Product product) {
+    public List<Shopping> fetchAllShoppingItemsMatchingSpecificProduct(String productBarcode) {
         database = dbHelper.getReadableDatabase();
         cursor = new DbContentProvider().query(ShoppingDatabaseContract.MainTableEntry.TABLE, ShoppingDatabaseContract.COLUMNS_NAMES_MAIN_TABLE,
-                ShoppingDatabaseContract.MainTableEntry.COL_PRODUCT_BARCODE + " = ?", new String[]{product.getBarCode()});
+                ShoppingDatabaseContract.MainTableEntry.COL_PRODUCT_BARCODE + " = ?", new String[]{productBarcode});
         List<Shopping> shoppingList = new ArrayList<>();
         while (cursor.moveToNext()) {
             int indexId = cursor.getColumnIndex(ShoppingDatabaseContract.MainTableEntry._ID);
@@ -151,10 +147,10 @@ public class ShoppingDatabaseDao implements IShoppingDatabaseDao {
     }
 
     @Override
-    public int deleteShop(Shop shop) {
+    public int deleteShop(String shopIdentifier) {
         database = dbHelper.getWritableDatabase();
         int deletedRowsQty = new DbContentProvider().delete(ShoppingDatabaseContract.ShopsEntry.TABLE, ShoppingDatabaseContract.ShopsEntry.COL_SHOP_IDENTIFIER,
-                new String[]{shop.getIdentifier()});
+                new String[]{shopIdentifier});
         database.close();
         return deletedRowsQty;
     }

@@ -3,18 +3,12 @@ package com.github.w_kamil.shoppingapp.dao;
 
 public class Shop {
 
-    private final String id;
     private String identifier;
     private String address;
 
-    public Shop(String id, String identifier, String address) {
-        this.id = id;
+    public Shop(String identifier, String address) {
         this.identifier = identifier;
         this.address = address;
-    }
-
-    public String getId() {
-        return id;
     }
 
     public String getIdentifier() {
