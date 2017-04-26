@@ -92,7 +92,8 @@ public class ShoppingDatabaseDao implements IShoppingDatabaseDao {
         return shopsList;
     }
 
-    //TODO implement fetchAllShoppingItemsMatchingSpecificProduct
+
+
     @Override
     public List<Shopping> fetchAllShoppingItemsMatchingSpecificProduct(Product product) {
         database = dbHelper.getReadableDatabase();
@@ -103,46 +104,20 @@ public class ShoppingDatabaseDao implements IShoppingDatabaseDao {
             int indexId = cursor.getColumnIndex(ShoppingDatabaseContract.MainTableEntry._ID);
             String shoppingId = cursor.getString(indexId);
             int indexBarcode = cursor.getColumnIndex(ShoppingDatabaseContract.MainTableEntry.COL_PRODUCT_BARCODE);
-            String barcode = cursor.getString(indexBarcode)
+            String barcode = cursor.getString(indexBarcode);
             int indexShopIdentifier = cursor.getColumnIndex(ShoppingDatabaseContract.MainTableEntry.COL_SHOP_IDENTIFIER);
             String shopIdentifier = cursor.getString(indexShopIdentifier);
             int indexShopiingDate = cursor.getColumnIndex(ShoppingDatabaseContract.MainTableEntry.COL_MAIN_DATE);
-
             Date shoppingDate = new Date(cursor.getLong(indexShopiingDate));
-
-
-            Shopping shopping = new Shopping(shoppingId, barcode, shopIdentifier, )
-
-            Shop shop;
-            int indexId = cursor.getColumnIndex(ShoppingDatabaseContract.MainTableEntry._ID);
-            int procuctId = cursor.getInt(indexId);
-            int indexDate = cursor.getColumnIndex(ShoppingDatabaseContract.MainTableEntry.COL_MAIN_DATE);
-            String date = cursor.getString(indexDate);
-            int indexShopId = cursor.getColumnIndex(ShoppingDatabaseContract.MainTableEntry.COL_SHOP_IDENTIFIER);
-            String shopId = cursor.getString(indexShopId);
             int indexPrice = cursor.getColumnIndex(ShoppingDatabaseContract.MainTableEntry.COL_MAIN_PRICE);
             BigDecimal price = new BigDecimal(cursor.getString(indexPrice));
-            Cursor shopCursor = new DbContentProvider().query(ShoppingDatabaseContract.ShopsEntry.TABLE, ShoppingDatabaseContract.COLUMNS_NAMES_SHOPS,
-                    ShoppingDatabaseContract.ShopsEntry._ID + " = ?", new String[]{shopId});
-            if (shopCursor.moveToFirst()) {
-                int indexShoppingId = cursor.getColumnIndex(ShoppingDatabaseContract.MainTableEntry._ID);
-                String shoppingId = cursor.getString(indexShoppingId);
-                int indexShopIdentifier = cursor.getColumnIndex(ShoppingDatabaseContract.ShopsEntry.COL_SHOP_IDENTIFIER);
-                String identifier = cursor.getString(indexShopIdentifier);
-                int indexAddress = cursor.getColumnIndex(ShoppingDatabaseContract.ShopsEntry.COL_SHOP_ADDRESS);
-                String address = cursor.getString(indexAddress);
-                shop = new Shop(shopId, identifier, address);
-                String shopIdentifier = shop.getIdentifier();
-                shoppingList.add(new Shopping(shoppingId, product.getBarCode(), shopIdentifier, date, price));
-            }
-
+            Shopping shopping = new Shopping(shoppingId, barcode, shopIdentifier, shoppingDate, price);
+            shoppingList.add(shopping);
         }
         cursor.close();
         database.close();
         return shoppingList;
     }
-
-    //TODO implement  addShopping, deleteShopping
 
     @Override
     public long addProduct(Product product) {
@@ -186,28 +161,24 @@ public class ShoppingDatabaseDao implements IShoppingDatabaseDao {
 
     @Override
     public long addShopping(Shopping singleShoppingItem) {
+        database = dbHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(ShoppingDatabaseContract.MainTableEntry.COL_MAIN_DATE, singleShoppingItem.getDate());
+        contentValues.put(ShoppingDatabaseContract.MainTableEntry.COL_MAIN_DATE, singleShoppingItem.getDate().getTime());
         contentValues.put(ShoppingDatabaseContract.MainTableEntry.COL_MAIN_PRICE, String.valueOf(singleShoppingItem.getPrice()));
-        Cursor productCursor = new DbContentProvider().query(ShoppingDatabaseContract.ProductsEntry.TABLE, ShoppingDatabaseContract.COLUMNS_NAMES_PRODUCTS,
-                ShoppingDatabaseContract.ProductsEntry.COL_PRODUUCTS_BARCODE, new String[]{singleShoppingItem.getBarCode()});
-        if (productCursor.moveToFirst()) {
-            String productId = productCursor.getString(productCursor.getColumnIndex(ShoppingDatabaseContract.ProductsEntry._ID));
-            contentValues.put(ShoppingDatabaseContract.MainTableEntry.COL_PRODUCT_BARCODE, productId);
-        }
-        Cursor shopCusror = new DbContentProvider().query(ShoppingDatabaseContract.ShopsEntry.TABLE, ShoppingDatabaseContract.COLUMNS_NAMES_SHOPS,
-                ShoppingDatabaseContract.ShopsEntry.COL_SHOP_IDENTIFIER, new String[]{singleShoppingItem.getShopIdentifier()});
-        if (shopCusror.moveToFirst()) {
-            String shopId = shopCusror.getString(productCursor.getColumnIndex(ShoppingDatabaseContract.ShopsEntry._ID));
-            contentValues.put(ShoppingDatabaseContract.MainTableEntry.COL_SHOP_IDENTIFIER, shopId);
-        }
-        return new DbContentProvider().insert(ShoppingDatabaseContract.MainTableEntry.TABLE, contentValues);
+        contentValues.put(ShoppingDatabaseContract.MainTableEntry.COL_PRODUCT_BARCODE, singleShoppingItem.getBarCode());
+        contentValues.put(ShoppingDatabaseContract.MainTableEntry.COL_SHOP_IDENTIFIER, singleShoppingItem.getShopIdentifier());
+        long insertedRowID = new DbContentProvider().insert(ShoppingDatabaseContract.MainTableEntry.TABLE, contentValues);
+        database.close();
+        return insertedRowID;
     }
 
     @Override
     public int deleteShopping(Shopping singleShoppingItem) {
-        return new DbContentProvider().delete(ShoppingDatabaseContract.MainTableEntry.TABLE, ShoppingDatabaseContract.MainTableEntry._ID,
+        database = dbHelper.getWritableDatabase();
+        int deletedRowsQty = new DbContentProvider().delete(ShoppingDatabaseContract.MainTableEntry.TABLE, ShoppingDatabaseContract.MainTableEntry._ID,
                 new String[]{singleShoppingItem.getId()});
+        database.close();
+        return deletedRowsQty;
     }
 
     private class DbContentProvider {

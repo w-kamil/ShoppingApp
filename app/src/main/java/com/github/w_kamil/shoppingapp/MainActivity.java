@@ -9,9 +9,15 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.github.w_kamil.shoppingapp.dao.DbHelper;
+import com.github.w_kamil.shoppingapp.dao.Product;
 import com.github.w_kamil.shoppingapp.dao.ShoppingDatabaseContract;
+import com.github.w_kamil.shoppingapp.dao.ShoppingDatabaseDao;
+import com.github.w_kamil.shoppingapp.products.ProductsActivity;
+import com.github.w_kamil.shoppingapp.shops.ShopsActivity;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -32,17 +38,6 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState != null) {
             scanResult = savedInstanceState.getString(SCAN_RESULT_KEY);
         }
-
-        //TODO delete hese lines - used only for test of DbHelper
-        DbHelper dbHelper = new DbHelper(this);
-        SQLiteDatabase database = dbHelper.getReadableDatabase();
-        Cursor cursor = database.query(ShoppingDatabaseContract.ShopsEntry.TABLE,ShoppingDatabaseContract.COLUMNS_NAMES_SHOPS,null, null, null, null, null);
-        if(cursor.moveToFirst()){
-            String cursorResult = cursor.getString(1);
-            Log.d("CURSOR RESULT", cursorResult);
-        }
-
-
     }
 
     @Override
@@ -79,12 +74,15 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.goto_shops)
     void startShopsActivity() {
+        Intent intent = new Intent(this, ShopsActivity.class);
+        startActivity(intent);
         Toast.makeText(this, "lista sklepów", Toast.LENGTH_SHORT).show();
     }
 
     @OnClick(R.id.goto_products)
     void gotoProductsActivity() {
+        Intent intent = new Intent(this, ProductsActivity.class);
+        startActivity(intent);
         Toast.makeText(this, "lista produktów", Toast.LENGTH_SHORT).show();
     }
-
 }
