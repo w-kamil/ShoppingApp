@@ -2,6 +2,7 @@ package com.github.w_kamil.shoppingapp.dao;
 
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 public class Shopping {
 
@@ -9,10 +10,10 @@ public class Shopping {
     private final String id;
     private final String barCode;
     private String shopIdentifier;
-    private final String date;
+    private final Date date;
     private BigDecimal price;
 
-    public Shopping(String id, String barCode, String shopIdentifier, String date, BigDecimal price) {
+    public Shopping(String id, String barCode, String shopIdentifier, Date date, BigDecimal price) {
         this.id = id;
         this.barCode = barCode;
         this.shopIdentifier = shopIdentifier;
@@ -32,7 +33,7 @@ public class Shopping {
         return shopIdentifier;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
