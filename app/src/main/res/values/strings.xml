@@ -5,4 +5,11 @@
     <string name="products_list">LISTA PRODUKTÓW</string>
     <string name="scan_cancelled">Anulowano skanowanie</string>
     <string name="scan_product">Skanuj produkt</string>
+    <string name="your_shops">Twoje sklepy</string>
+    <string name="your_products">Twoje produkty</string>
+    <string name="add_new_shop">Dodaj nowy sklep</string>
+    <string name="show_products_list_in_shop">Lista produktów dostępnych w sklepie</string>
+    <string name="rename_shop">Zmień nazwę sklepu</string>
+    <string name="delete_shop">Usuń sklep</string>
+    <string name="change_shop_address">Zmień adres sklepu</string>
 </resources>

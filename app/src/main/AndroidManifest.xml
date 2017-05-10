@@ -21,9 +21,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".shops.ShopsActivity"
-            android:label="Twoje sklepy"/>
-        <activity android:name=".products.ProductsActivity" />
-        <activity android:name=".singleProduct.SingleProductActivity"></activity>
+            android:label="@string/your_shops"/>
+        <activity android:name=".products.ProductsActivity"
+            android:label="@string/your_products"/>
+        <activity android:name=".singleProduct.SingleProductActivity" />
     </application>
 
 </manifest>
