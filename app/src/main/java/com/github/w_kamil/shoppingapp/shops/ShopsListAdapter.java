@@ -4,7 +4,6 @@ package com.github.w_kamil.shoppingapp.shops;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -21,12 +20,13 @@ import java.util.List;
 public class ShopsListAdapter extends RecyclerView.Adapter<ShopsListAdapter.MyViewHolder> {
 
     private List<Shop> shopsList = Collections.emptyList();
+    private PopupMenu.OnMenuItemClickListener onMenuItemClickListener;
 
     public void setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener onMenuItemClickListener) {
         this.onMenuItemClickListener = onMenuItemClickListener;
     }
 
-    PopupMenu.OnMenuItemClickListener onMenuItemClickListener;
+
 
     public ShopsListAdapter(List<Shop> shopsList) {
         this.shopsList = shopsList;
@@ -34,7 +34,7 @@ public class ShopsListAdapter extends RecyclerView.Adapter<ShopsListAdapter.MyVi
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View layout = LayoutInflater.from(parent.getContext()).inflate(R.layout.sigle_shop, parent, false);
+        View layout = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_shop_on_list, parent, false);
         return new MyViewHolder(layout);
     }
 
@@ -48,7 +48,7 @@ public class ShopsListAdapter extends RecyclerView.Adapter<ShopsListAdapter.MyVi
             @Override
             public void onClick(View v) {
                 PopupMenu popupMenu = new PopupMenu(holder.eventButton.getContext(),myViewHolder.eventButton);
-                popupMenu.inflate(R.menu.single_shop_menu);
+                popupMenu.inflate(R.menu.single_shop_popup_menu);
                 popupMenu.setOnMenuItemClickListener(onMenuItemClickListener);
                 popupMenu.show();
             }

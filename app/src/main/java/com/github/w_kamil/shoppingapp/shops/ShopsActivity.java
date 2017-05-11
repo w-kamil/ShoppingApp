@@ -38,6 +38,7 @@ public class ShopsActivity extends AppCompatActivity implements PopupMenu.OnMenu
         //TODO implement presnter for providing data to ShopsActivity
         ShoppingDatabaseDao dao = new ShoppingDatabaseDao(this);
         List<Shop> shops = dao.fetchAllShops();
+
         ShopsListAdapter adapter = new ShopsListAdapter(shops);
         adapter.setOnMenuItemClickListener(this);
         recyclerView.setAdapter(adapter);
@@ -52,9 +53,10 @@ public class ShopsActivity extends AppCompatActivity implements PopupMenu.OnMenu
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
+        //TODO implement adding new shop to list popup window and list settings/filter
         switch (item.getItemId()) {
             case R.id.add_shop:
-                //TODO implement adding new shop to list popup window
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

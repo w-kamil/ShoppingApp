@@ -12,4 +12,8 @@
     <string name="rename_shop">Zmień nazwę sklepu</string>
     <string name="delete_shop">Usuń sklep</string>
     <string name="change_shop_address">Zmień adres sklepu</string>
+    <string name="settings">Ustawienia</string>
+    <string name="show_shoppinh_history">Pokaż historię zakupów</string>
+    <string name="change_product_description">Zmień opin produktu</string>
+    <string name="delete_product">Usuń produkt</string>
 </resources>
