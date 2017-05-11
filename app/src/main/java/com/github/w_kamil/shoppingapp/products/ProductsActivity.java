@@ -35,6 +35,9 @@ public class ProductsActivity extends AppCompatActivity implements PopupMenu.OnM
         ShoppingDatabaseDao dao = new ShoppingDatabaseDao(this);
         List<Product> products = dao.fetchAllProducts();
 
+        ProductsListAdapter adapter = new ProductsListAdapter(products);
+        adapter.setOnMenuItemClickListener(this);
+        recyclerView.setAdapter(adapter);
 
     }
 
@@ -61,7 +64,7 @@ public class ProductsActivity extends AppCompatActivity implements PopupMenu.OnM
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-        //TODO implement popup menu options
+        //TODO implement popup menu options and move shopping history to onitemclicklistener
         switch (item.getItemId()) {
             case R.id.show_shopping_history:
                 Toast.makeText(this, "Na ten przycisk przejdziesz do historii zakupów produktu", Toast.LENGTH_SHORT).show();

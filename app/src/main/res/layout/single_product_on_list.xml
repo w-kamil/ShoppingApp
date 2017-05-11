@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="0dp"
@@ -20,7 +20,7 @@
             tools:text="Ryż" />
 
         <TextView
-            android:id="@+id/barcode_value_textview"
+            android:id="@+id/products_barcode_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"

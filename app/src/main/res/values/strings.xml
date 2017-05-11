@@ -16,4 +16,5 @@
     <string name="show_shoppinh_history">Pokaż historię zakupów</string>
     <string name="change_product_description">Zmień opin produktu</string>
     <string name="delete_product">Usuń produkt</string>
+    <string name="barcode_value">Kod kreskowy: %s</string>
 </resources>

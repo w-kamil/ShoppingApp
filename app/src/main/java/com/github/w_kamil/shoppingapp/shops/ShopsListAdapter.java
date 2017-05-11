@@ -27,7 +27,6 @@ public class ShopsListAdapter extends RecyclerView.Adapter<ShopsListAdapter.MyVi
     }
 
 
-
     public ShopsListAdapter(List<Shop> shopsList) {
         this.shopsList = shopsList;
     }
@@ -41,17 +40,13 @@ public class ShopsListAdapter extends RecyclerView.Adapter<ShopsListAdapter.MyVi
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Shop shop = shopsList.get(position);
-        MyViewHolder myViewHolder = holder;
-        myViewHolder.shopIdentifier.setText(shop.getIdentifier());
-        myViewHolder.shopAddress.setText(shop.getAddress());
-        myViewHolder.eventButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PopupMenu popupMenu = new PopupMenu(holder.eventButton.getContext(),myViewHolder.eventButton);
-                popupMenu.inflate(R.menu.single_shop_popup_menu);
-                popupMenu.setOnMenuItemClickListener(onMenuItemClickListener);
-                popupMenu.show();
-            }
+        holder.shopIdentifier.setText(shop.getIdentifier());
+        holder.shopAddress.setText(shop.getAddress());
+        holder.eventButton.setOnClickListener(v -> {
+            PopupMenu popupMenu = new PopupMenu(holder.eventButton.getContext(), holder.eventButton);
+            popupMenu.inflate(R.menu.single_shop_popup_menu);
+            popupMenu.setOnMenuItemClickListener(onMenuItemClickListener);
+            popupMenu.show();
         });
     }
 

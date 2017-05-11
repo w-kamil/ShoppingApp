@@ -50,18 +50,18 @@ public class MainActivity extends AppCompatActivity {
 //        dao.addProduct(new Product("59045", "ser"));
 //        dao.addProduct(new Product("59045", "ser"));
 //        dao.addProduct(new Product("59046", "ser"));
-        dao.fetchAllProducts();
+//        dao.fetchAllProducts();
 //        dao.deleteProduct(new Product("59046", "ser"));
 //        dao.deleteProduct(new Product("59045", "ser"));
 
 //        dao.addShop(new Shop("abc", "warszawa"));
 //        dao.addShop(new Shop("abc", "warszawa"));
 //        dao.addShop(new Shop("abcD", "warszawa"));
-        dao.fetchAllShops();
+//        dao.fetchAllShops();
 //        dao.deleteShop("abc");
 
-        dao.addShopping(new Shopping("1", "59045", "abc", new Date(), new BigDecimal(10)));
-        dao.addShopping(new Shopping("1", "59045", "abc", new Date(), new BigDecimal(10)));
+//        dao.addShopping(new Shopping("1", "59045", "abc", new Date(), new BigDecimal(10)));
+//        dao.addShopping(new Shopping("1", "59045", "abc", new Date(), new BigDecimal(10)));
         dao.fetchAllProductsMatchingSpecificShop("abc");
         dao.fetchAllShoppingItemsMatchingSpecificProduct("59046");
 

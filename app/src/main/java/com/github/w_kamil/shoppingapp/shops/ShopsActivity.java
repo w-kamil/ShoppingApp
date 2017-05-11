@@ -66,7 +66,7 @@ public class ShopsActivity extends AppCompatActivity implements PopupMenu.OnMenu
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-        //TODO implement popup menu options
+        //TODO implement popup menu options and move products in shop to onitemclickliestener
         switch (item.getItemId()) {
             case R.id.show_products_in_shop:
                 Toast.makeText(this, "Na ten przycisk przejdziesz do list produktow", Toast.LENGTH_SHORT).show();
