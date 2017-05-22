@@ -6,56 +6,48 @@
     android:layout_height="match_parent"
     tools:context="com.github.w_kamil.shoppingapp.singleProduct.SingleProductActivity">
 
-    <ViewFlipper
-        android:id="@+id/view_flipper"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-
-
-        <LinearLayout
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-            <android.support.v7.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
-            </android.support.v7.widget.RecyclerView>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/colorAccent" />
+        </android.support.v7.widget.RecyclerView>
 
-            <RelativeLayout
-                android:id="@+id/goto_products"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:background="?attr/selectableItemBackground">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorAccent" />
 
-                <ImageView
-                    android:id="@+id/add_new_shopping_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="10dp"
-                    android:layout_toStartOf="@+id/add_new_shopping_textview"
-                    android:src="@drawable/ic_action_add_shopping" />
+        <RelativeLayout
+            android:id="@+id/goto_products"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="?attr/selectableItemBackground">
 
-                <TextView
-                    android:id="@+id/add_new_shopping_textview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:text="@string/products_list"
-                    android:textSize="20sp"
-                    tools:text="SHOPPING LIST" />
-            </RelativeLayout>
+            <ImageView
+                android:id="@+id/add_new_shopping_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="10dp"
+                android:layout_toStartOf="@+id/add_new_shopping_textview"
+                android:src="@drawable/ic_action_add_shopping" />
 
-
-        </LinearLayout>
-
-    </ViewFlipper>
+            <TextView
+                android:id="@+id/add_new_shopping_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/products_list"
+                android:textSize="20sp"
+                tools:text="SHOPPING LIST" />
+        </RelativeLayout>
+    </LinearLayout>
 
 </FrameLayout>

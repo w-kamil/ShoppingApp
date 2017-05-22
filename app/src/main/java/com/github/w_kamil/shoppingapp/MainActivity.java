@@ -17,6 +17,7 @@ import com.github.w_kamil.shoppingapp.dao.ShoppingDatabaseContract;
 import com.github.w_kamil.shoppingapp.dao.ShoppingDatabaseDao;
 import com.github.w_kamil.shoppingapp.products.ProductsActivity;
 import com.github.w_kamil.shoppingapp.shops.ShopsActivity;
+import com.github.w_kamil.shoppingapp.singleProduct.SingleProductActivity;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
     private String scanResult;
     private static final String SCAN_RESULT_KEY = "scanResultKey";
+    private ShoppingDatabaseDao dao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         //TODO delete these lines - used only for test, handle multiplied unique values exception
-        ShoppingDatabaseDao dao = new ShoppingDatabaseDao(this);
+        dao = new ShoppingDatabaseDao(this);
 //        dao.addProduct(new Product("59045", "ser"));
 //        dao.addProduct(new Product("59045", "ser"));
 //        dao.addProduct(new Product("59046", "ser"));
@@ -82,8 +84,15 @@ public class MainActivity extends AppCompatActivity {
             if (intentResult.getContents() == null) {
                 Toast.makeText(this, R.string.scan_cancelled, Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(this, "Wynik skanu: " + intentResult.getContents(), Toast.LENGTH_LONG).show();
                 scanResult = intentResult.getContents();
+                Toast.makeText(this, "Wynik skanu: " + scanResult, Toast.LENGTH_LONG).show();
+                if(dao.searchShopping(scanResult)) {
+                    SingleProductActivity.createIntent(scanResult, this);
+                    Toast.makeText(this, "Produkt jest w bazie" + scanResult, Toast.LENGTH_LONG).show();
+                } else{
+
+                    Toast.makeText(this, "Produktu nie ma w bazie" + scanResult, Toast.LENGTH_LONG).show();
+                }
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);

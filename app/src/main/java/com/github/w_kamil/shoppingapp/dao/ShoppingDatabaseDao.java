@@ -9,11 +9,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
 
 import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 public class ShoppingDatabaseDao implements IShoppingDatabaseDao {
 
@@ -89,7 +87,6 @@ public class ShoppingDatabaseDao implements IShoppingDatabaseDao {
     }
 
 
-
     @Override
     public List<Shopping> fetchAllShoppingItemsMatchingSpecificProduct(String productBarcode) {
         database = dbHelper.getReadableDatabase();
@@ -153,6 +150,20 @@ public class ShoppingDatabaseDao implements IShoppingDatabaseDao {
                 new String[]{shopIdentifier});
         database.close();
         return deletedRowsQty;
+    }
+
+    @Override
+    public boolean searchShopping(String productBarcode) {
+        database = dbHelper.getReadableDatabase();
+
+        Cursor cursor = new DbContentProvider().query(ShoppingDatabaseContract.MainTableEntry.TABLE, null,
+                ShoppingDatabaseContract.MainTableEntry.COL_PRODUCT_BARCODE + " = ?", new String[]{productBarcode});
+        if (cursor.getCount() > 0){
+            return true;
+        } else{
+            return  false;
+        }
+
     }
 
     @Override
