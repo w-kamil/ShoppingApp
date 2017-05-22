@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/show_products_in_shop"
+        android:title="@string/show_products_list_in_shop"
+        app:showAsAction="never"/>
+    <item android:id="@+id/rename_shop_identifier"
+        android:title="@string/rename_shop"
+        app:showAsAction="never"/>
+    <item android:id="@+id/change_shop_address"
+        android:title="@string/change_shop_address"
+        app:showAsAction="never"/>
+    <item android:id="@+id/delete_shop"
+        android:title="@string/delete_shop"
+        app:showAsAction="never"/>
+
+
+</menu>
