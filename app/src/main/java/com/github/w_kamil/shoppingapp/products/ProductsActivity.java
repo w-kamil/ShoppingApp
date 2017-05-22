@@ -64,7 +64,7 @@ public class ProductsActivity extends AppCompatActivity implements PopupMenu.OnM
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-        //TODO implement popup menu options and move shopping history to onitemclicklistener
+        //TODO implement popup menu options and move shopping history (single product activity) to onitemclicklistener
         switch (item.getItemId()) {
             case R.id.show_shopping_history:
                 Toast.makeText(this, "Na ten przycisk przejdziesz do historii zakupów produktu", Toast.LENGTH_SHORT).show();
