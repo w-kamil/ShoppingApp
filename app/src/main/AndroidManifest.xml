@@ -24,7 +24,8 @@
             android:label="@string/your_shops"/>
         <activity android:name=".products.ProductsActivity"
             android:label="@string/your_products"/>
-        <activity android:name=".singleProduct.SingleProductActivity" />
+        <activity android:name=".singleProduct.SingleProductActivity"
+            android:label="@string/shopping_history"/>
     </application>
 
 </manifest>

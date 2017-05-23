@@ -17,4 +17,11 @@
     <string name="change_product_description">Zmień opin produktu</string>
     <string name="delete_product">Usuń produkt</string>
     <string name="barcode_value">Kod kreskowy: %s</string>
+    <string name="product_is_not_in_database">Produktu %s nie ma w bazie</string>
+    <string name="dialog_add_product">Czy chcesz dodać produkt?</string>
+    <string name="add_product">Dodaj produkt</string>
+    <string name="cancel">Anuluj</string>
+    <string name="enter_product_description">Podaj opis produktu</string>
+    <string name="add_shopping_entry">Dodaj wpis</string>
+    <string name="shopping_history">Historia zakupów produktu</string>
 </resources>

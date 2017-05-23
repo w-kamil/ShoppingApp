@@ -13,7 +13,7 @@ public interface IShoppingDatabaseDao {
     int deleteProduct(Product product);
     long addShop(Shop shop);
     int deleteShop(String shopIdentifier);
-    boolean searchShopping (String productBarcode);
+    Product searchProduct (String productBarcode);
     long addShopping(Shopping singleShoppingItem);
     int deleteShopping (Shopping singleShoppingItem);
 }

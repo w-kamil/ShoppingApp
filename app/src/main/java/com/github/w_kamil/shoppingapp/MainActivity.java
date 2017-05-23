@@ -1,12 +1,17 @@
 package com.github.w_kamil.shoppingapp;
 
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.github.w_kamil.shoppingapp.dao.DbHelper;
@@ -80,18 +85,34 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        LayoutInflater layoutInflater = getLayoutInflater();
+        View dialogLayout = layoutInflater.inflate(R.layout.dialog_add_product,null);
+        final EditText descriptopnInputEditText = (EditText) dialogLayout.findViewById(R.id.description_input);
+
+
         if (intentResult != null) {
             if (intentResult.getContents() == null) {
                 Toast.makeText(this, R.string.scan_cancelled, Toast.LENGTH_SHORT).show();
             } else {
                 scanResult = intentResult.getContents();
-                Toast.makeText(this, "Wynik skanu: " + scanResult, Toast.LENGTH_LONG).show();
-                if(dao.searchShopping(scanResult)) {
-                    SingleProductActivity.createIntent(scanResult, this);
-                    Toast.makeText(this, "Produkt jest w bazie" + scanResult, Toast.LENGTH_LONG).show();
-                } else{
+                Toast.makeText(this, "Wynik skanu: " + scanResult, Toast.LENGTH_SHORT).show();
+                if (dao.searchProduct(scanResult) != null) {
+                    gotoSingleProductActivity(scanResult);
+                    Toast.makeText(this, "Produkt jest w bazie" + scanResult, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "Produktu nie ma w bazie" + scanResult, Toast.LENGTH_SHORT).show();
+                    AlertDialog createNewProductDialog = new AlertDialog.Builder(this)
+                            .setTitle(String.format(getString(R.string.product_is_not_in_database), scanResult))
+                            .setMessage(R.string.dialog_add_product)
+                            .setView(dialogLayout)
+                            .setPositiveButton(R.string.add_product, (dialog, which) -> {
 
-                    Toast.makeText(this, "Produktu nie ma w bazie" + scanResult, Toast.LENGTH_LONG).show();
+                                Product productToAdd = new Product(scanResult, descriptopnInputEditText.getText().toString());
+                                dao.addProduct(productToAdd);
+                                gotoSingleProductActivity(scanResult);
+                            })
+                            .setNegativeButton(R.string.cancel,null).create();
+                    createNewProductDialog.show();
                 }
             }
         } else {
@@ -121,5 +142,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ProductsActivity.class);
         startActivity(intent);
         Toast.makeText(this, "lista produktów", Toast.LENGTH_SHORT).show();
+    }
+
+    void gotoSingleProductActivity(String productBarcode){
+        startActivity(SingleProductActivity.createIntent(productBarcode, this));
     }
 }

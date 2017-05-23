@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
+import android.util.Log;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -153,15 +154,20 @@ public class ShoppingDatabaseDao implements IShoppingDatabaseDao {
     }
 
     @Override
-    public boolean searchShopping(String productBarcode) {
+    public Product searchProduct(String productBarcode) {
         database = dbHelper.getReadableDatabase();
 
-        Cursor cursor = new DbContentProvider().query(ShoppingDatabaseContract.MainTableEntry.TABLE, null,
-                ShoppingDatabaseContract.MainTableEntry.COL_PRODUCT_BARCODE + " = ?", new String[]{productBarcode});
-        if (cursor.getCount() > 0){
-            return true;
-        } else{
-            return  false;
+        Cursor cursor = new DbContentProvider().query(ShoppingDatabaseContract.ProductsEntry.TABLE, null,
+                ShoppingDatabaseContract.ProductsEntry.COL_PRODUUCTS_BARCODE + " = ?", new String[]{productBarcode});
+        if (cursor.moveToNext()) {
+            int indexId = cursor.getColumnIndex(ShoppingDatabaseContract.ProductsEntry._ID);
+            int procuctId = cursor.getInt(indexId);
+            int indexDescription = cursor.getColumnIndex(ShoppingDatabaseContract.ProductsEntry.COL_PRODUCTS_DESCRIPTION);
+            String description = cursor.getString(indexDescription);
+            Product product = new Product(productBarcode, description);
+            return product;
+        } else {
+            return null;
         }
 
     }
