@@ -14,7 +14,13 @@
         <TextView
             android:id="@+id/product_data"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+           tools:text="cienkopisy 123124"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorAccent" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view"
@@ -30,22 +36,22 @@
             android:background="@color/colorAccent" />
 
         <RelativeLayout
-            android:id="@+id/goto_products"
+            android:id="@+id/add_new_shopping"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:background="?attr/selectableItemBackground">
 
             <ImageView
-                android:id="@+id/add_new_shopping_icon"
+                android:id="@+id/new_shopping_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="10dp"
-                android:layout_toStartOf="@+id/add_new_shopping_textview"
+                android:layout_toStartOf="@+id/new_shopping_textview"
                 android:src="@drawable/ic_action_add_shopping" />
 
             <TextView
-                android:id="@+id/add_new_shopping_textview"
+                android:id="@+id/new_shopping_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"

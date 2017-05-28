@@ -24,6 +24,5 @@
     <string name="enter_product_description">Podaj opis produktu</string>
     <string name="add_shopping_entry">Dodaj wpis</string>
     <string name="shopping_history">Historia zakupów produktu</string>
-    <string name="single_shopping_entry_text">%s, %s</string>
     <string name="delete_entry">Usuń wpis</string>
 </resources>

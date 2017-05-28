@@ -7,11 +7,19 @@ import java.util.Date;
 public class Shopping {
 
 
-    private final String id;
+    private String id;
     private Product product;
     private Shop shop;
-    private final Date date;
+    private  Date date;
     private BigDecimal price;
+
+    public Shopping(Product product, Shop shop, Date date, BigDecimal price) {
+
+        this.product = product;
+        this.shop = shop;
+        this.date = date;
+        this.price = price;
+    }
 
     public Shopping(String id, Product product, Shop shop, Date date, BigDecimal price) {
         this.id = id;
@@ -43,6 +51,10 @@ public class Shopping {
 
     public Date getDate() {
         return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public BigDecimal getPrice() {

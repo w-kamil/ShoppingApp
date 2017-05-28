@@ -45,8 +45,7 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
         Shopping shopping = shoppingList.get(position);
         holder.productName.setText(shopping.getProduct().getDescription());
         holder.productBarcode.setText(shopping.getProduct().getBarCode());
-        holder.shopNameAndAddress.setText(String.format(layoutInflater.getContext().getString(R.string.single_shopping_entry_text),
-                shopping.getShop().getIdentifier(), shopping.getShop().getAddress()));
+        holder.shopNameAndAddress.setText(shopping.getShop().getIdentifier() + ", " + shopping.getShop().getAddress());
         holder.date.setText(shopping.getDate().toString());
         holder.price.setText(shopping.getPrice().toString());
         holder.eventButton.setOnClickListener(v -> {
