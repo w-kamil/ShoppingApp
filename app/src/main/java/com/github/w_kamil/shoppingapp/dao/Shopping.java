@@ -8,15 +8,15 @@ public class Shopping {
 
 
     private final String id;
-    private final String barCode;
-    private String shopIdentifier;
+    private Product product;
+    private Shop shop;
     private final Date date;
     private BigDecimal price;
 
-    public Shopping(String id, String barCode, String shopIdentifier, Date date, BigDecimal price) {
+    public Shopping(String id, Product product, Shop shop, Date date, BigDecimal price) {
         this.id = id;
-        this.barCode = barCode;
-        this.shopIdentifier = shopIdentifier;
+        this.product = product;
+        this.shop = shop;
         this.date = date;
         this.price = price;
     }
@@ -25,12 +25,20 @@ public class Shopping {
         return id;
     }
 
-    public String getBarCode() {
-        return barCode;
+    public Product getProduct() {
+        return product;
     }
 
-    public String getShopIdentifier() {
-        return shopIdentifier;
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public Shop getShop() {
+        return shop;
+    }
+
+    public void setShop(Shop shop) {
+        this.shop = shop;
     }
 
     public Date getDate() {
@@ -39,5 +47,9 @@ public class Shopping {
 
     public BigDecimal getPrice() {
         return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 }

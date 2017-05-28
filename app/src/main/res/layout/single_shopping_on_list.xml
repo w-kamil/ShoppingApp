@@ -9,7 +9,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:layout_marginLeft="16dp"
         android:orientation="vertical">
 
         <TextView
@@ -34,13 +33,27 @@
             tools:text="LIDL, Warszawa, Bartycka" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/price_textview"
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:textSize="24sp"
-        tools:text="20,00zł"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/date_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:layout_gravity="right"
+            tools:text="20May2017"/>
+        <TextView
+            android:id="@+id/price_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textSize="24sp"
+            tools:text="20,00zł" />
+    </LinearLayout>
+
+
     <ImageView
         android:id="@+id/event_button"
         android:layout_width="wrap_content"

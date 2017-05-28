@@ -99,13 +99,15 @@ public class ShoppingDatabaseDao implements IShoppingDatabaseDao {
             String shoppingId = cursor.getString(indexId);
             int indexBarcode = cursor.getColumnIndex(ShoppingDatabaseContract.MainTableEntry.COL_PRODUCT_BARCODE);
             String barcode = cursor.getString(indexBarcode);
+            Product product = searchProduct(barcode);
             int indexShopIdentifier = cursor.getColumnIndex(ShoppingDatabaseContract.MainTableEntry.COL_SHOP_IDENTIFIER);
             String shopIdentifier = cursor.getString(indexShopIdentifier);
+            Shop shop = searchShop(shopIdentifier);
             int indexShopiingDate = cursor.getColumnIndex(ShoppingDatabaseContract.MainTableEntry.COL_MAIN_DATE);
             Date shoppingDate = new Date(cursor.getLong(indexShopiingDate));
             int indexPrice = cursor.getColumnIndex(ShoppingDatabaseContract.MainTableEntry.COL_MAIN_PRICE);
             BigDecimal price = new BigDecimal(cursor.getString(indexPrice));
-            Shopping shopping = new Shopping(shoppingId, barcode, shopIdentifier, shoppingDate, price);
+            Shopping shopping = new Shopping(shoppingId, product, shop, shoppingDate, price);
             shoppingList.add(shopping);
         }
         cursor.close();
@@ -156,7 +158,6 @@ public class ShoppingDatabaseDao implements IShoppingDatabaseDao {
     @Override
     public Product searchProduct(String productBarcode) {
         database = dbHelper.getReadableDatabase();
-
         Cursor cursor = new DbContentProvider().query(ShoppingDatabaseContract.ProductsEntry.TABLE, null,
                 ShoppingDatabaseContract.ProductsEntry.COL_PRODUUCTS_BARCODE + " = ?", new String[]{productBarcode});
         if (cursor.moveToNext()) {
@@ -173,13 +174,30 @@ public class ShoppingDatabaseDao implements IShoppingDatabaseDao {
     }
 
     @Override
+    public Shop searchShop(String shopIdentifier) {
+        database = dbHelper.getReadableDatabase();
+        Cursor cursor = new DbContentProvider().query(ShoppingDatabaseContract.ShopsEntry.TABLE, null,
+                ShoppingDatabaseContract.ShopsEntry.COL_SHOP_IDENTIFIER + " = ?", new String[]{shopIdentifier});
+        if (cursor.moveToNext()) {
+            int indexId = cursor.getColumnIndex(ShoppingDatabaseContract.ShopsEntry._ID);
+            int procuctId = cursor.getInt(indexId);
+            int indexShopAddress = cursor.getColumnIndex(ShoppingDatabaseContract.ShopsEntry.COL_SHOP_ADDRESS);
+            String shopAddress = cursor.getString(indexShopAddress);
+            Shop shop = new Shop(shopIdentifier, shopAddress);
+            return shop;
+        } else {
+            return null;
+        }
+    }
+
+    @Override
     public long addShopping(Shopping singleShoppingItem) {
         database = dbHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(ShoppingDatabaseContract.MainTableEntry.COL_MAIN_DATE, singleShoppingItem.getDate().getTime());
         contentValues.put(ShoppingDatabaseContract.MainTableEntry.COL_MAIN_PRICE, String.valueOf(singleShoppingItem.getPrice()));
-        contentValues.put(ShoppingDatabaseContract.MainTableEntry.COL_PRODUCT_BARCODE, singleShoppingItem.getBarCode());
-        contentValues.put(ShoppingDatabaseContract.MainTableEntry.COL_SHOP_IDENTIFIER, singleShoppingItem.getShopIdentifier());
+        contentValues.put(ShoppingDatabaseContract.MainTableEntry.COL_PRODUCT_BARCODE, singleShoppingItem.getProduct().getBarCode());
+        contentValues.put(ShoppingDatabaseContract.MainTableEntry.COL_SHOP_IDENTIFIER, singleShoppingItem.getShop().getIdentifier());
         long insertedRowID = new DbContentProvider().insert(ShoppingDatabaseContract.MainTableEntry.TABLE, contentValues);
         database.close();
         return insertedRowID;
