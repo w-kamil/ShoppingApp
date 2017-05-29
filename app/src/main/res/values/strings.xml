@@ -25,4 +25,10 @@
     <string name="add_shopping_entry">Dodaj wpis</string>
     <string name="shopping_history">Historia zakupów produktu</string>
     <string name="delete_entry">Usuń wpis</string>
+    <string name="add">Dodaj</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="enter_price">Podaj cenę</string>
+    <string name="zl">zł</string>
 </resources>

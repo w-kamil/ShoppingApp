@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.github.w_kamil.shoppingapp.R;
 import com.github.w_kamil.shoppingapp.dao.Product;
-import com.github.w_kamil.shoppingapp.shops.ShopsListAdapter;
 
 import java.util.Collections;
 import java.util.List;
