@@ -10,7 +10,7 @@ public class Shopping {
     private String id;
     private Product product;
     private Shop shop;
-    private  Date date;
+    private Date date;
     private BigDecimal price;
 
     public Shopping(Product product, Shop shop, Date date, BigDecimal price) {
