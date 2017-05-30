@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.w_kamil.shoppingapp.R;
-import com.github.w_kamil.shoppingapp.dao.Shop;
 import com.github.w_kamil.shoppingapp.dao.Shopping;
 import com.github.w_kamil.shoppingapp.dao.ShoppingDatabaseDao;
 

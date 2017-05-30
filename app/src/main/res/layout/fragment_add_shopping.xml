@@ -11,63 +11,56 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="24sp"
-        tools:text="Masło"/>
+        tools:text="Masło" />
 
     <TextView
         android:id="@+id/product_barcode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:text="5901234567"/>
+        android:text="5901234567"
+        android:textSize="20sp" />
 
     <Spinner
         android:id="@+id/shops_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scrollbarSize="24dp"/>
+        android:scrollbarSize="24dp" />
 
-   <LinearLayout
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:orientation="horizontal"
-       android:gravity="center_horizontal">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center_horizontal">
 
-       <NumberPicker
-           android:id="@+id/day_spinner"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_margin="5dp"/>
-       <NumberPicker
-           android:id="@+id/month_spinner"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_margin="5dp"/>
-       <NumberPicker
-           android:id="@+id/year_spinner"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_margin="5dp"/>
-   </LinearLayout>
+        <DatePicker
+            android:id="@+id/date_picker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+    </FrameLayout>
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <EditText
             android:id="@+id/price_edittext"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textSize="20sp"
-            android:hint="@string/enter_price"/>
+            android:hint="@string/enter_price"
+            android:textSize="20sp" />
+
         <TextView
             android:id="@+id/currency"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
+            android:layout_margin="5dp"
             android:text="@string/zl"
-            android:layout_margin="5dp"/>
+            android:textSize="20sp" />
     </LinearLayout>
 
 </LinearLayout>
