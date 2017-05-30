@@ -4,6 +4,7 @@ package com.github.w_kamil.shoppingapp.singleProduct;
 import android.content.Context;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +22,6 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
 
     private List<Shopping> shoppingList = Collections.emptyList();
     LayoutInflater layoutInflater;
-    private ShoppingDatabaseDao databasedao;
     private PopupMenu.OnMenuItemClickListener onMenuItemClickListener;
 
     public void setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener onMenuItemClickListener) {
@@ -42,6 +42,7 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
     @Override
     public void onBindViewHolder(ShoppingListAdapter.MyVieHolder holder, int position) {
         Shopping shopping = shoppingList.get(position);
+        Log.d("zakup do listy", shopping.getProduct().getBarCode().toString());
         holder.productName.setText(shopping.getProduct().getDescription());
         holder.productBarcode.setText(shopping.getProduct().getBarCode());
         holder.shopNameAndAddress.setText(shopping.getShop().getIdentifier() + ", " + shopping.getShop().getAddress());
@@ -73,7 +74,7 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
         public MyVieHolder(View itemView) {
             super(itemView);
             productName = (TextView) itemView.findViewById(R.id.product_name_textview);
-            productBarcode = (TextView) itemView.findViewById(R.id.products_barcode_textview);
+            productBarcode = (TextView) itemView.findViewById(R.id.product_barcode_textview);
             shopNameAndAddress = (TextView) itemView.findViewById(R.id.shop_name_and_address_textview);
             date = (TextView) itemView.findViewById(R.id.date_textview);
             price = (TextView) itemView.findViewById(R.id.price_textview);

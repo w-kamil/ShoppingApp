@@ -89,7 +89,6 @@ public class AddShoppingFragment extends DialogFragment {
                     Date choosenDate = cal.getTime();
                     BigDecimal price = new BigDecimal(priceEditText.getText().toString());
                     Shopping shoppingToAdd = new Shopping(product, shop, choosenDate, price);
-                    Log.d("zakup do listy", shoppingToAdd.toString());
                     dao.addShopping(shoppingToAdd);
                 })
                 .setNegativeButton(R.string.cancel, null);
