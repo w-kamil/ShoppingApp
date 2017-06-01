@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/show_shopping_history"
-        android:title="@string/show_shoppinh_history"
+        android:title="@string/show_shopping_history"
         app:showAsAction="never" />
     <item
         android:id="@+id/change_product_description"
