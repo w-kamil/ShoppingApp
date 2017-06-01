@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    void gotoSingleProductActivity(String productBarcode) {
+    private void gotoSingleProductActivity(String productBarcode) {
         startActivity(SingleProductActivity.createIntent(productBarcode, this));
     }
 }

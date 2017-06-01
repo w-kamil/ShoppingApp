@@ -18,10 +18,11 @@ import java.util.List;
 public class ProductsListAdapter extends RecyclerView.Adapter<ProductsListAdapter.MyViewHolder> {
 
     private List<Product> productList = Collections.emptyList();
-    private PopupMenu.OnMenuItemClickListener onMenuItemClickListener;
+//    private PopupMenu.OnMenuItemClickListener onSingleProductMenuItemClickListner;
+    private OnSingleProductMenuItemClickListner onSingleProductMenuItemClickListner;
 
-    public void setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener onMenuItemClickListener) {
-        this.onMenuItemClickListener = onMenuItemClickListener;
+    public void setOnSingleProductMenuItemClickListner(OnSingleProductMenuItemClickListner onSingleProductMenuItemClickListner) {
+        this.onSingleProductMenuItemClickListner = onSingleProductMenuItemClickListner;
     }
 
     public ProductsListAdapter(List<Product> productList) {
@@ -41,8 +42,9 @@ public class ProductsListAdapter extends RecyclerView.Adapter<ProductsListAdapte
         holder.productBarcode.setText(String.format(holder.productBarcode.getContext().getString(R.string.barcode_value), product.getBarCode()));
         holder.eventButton.setOnClickListener(v -> {
             PopupMenu popupMenu = new PopupMenu(holder.eventButton.getContext(), holder.eventButton);
+            onSingleProductMenuItemClickListner.setSearchedProductBarcode(product.getBarCode());
             popupMenu.inflate(R.menu.single_product_popup_menu);
-            popupMenu.setOnMenuItemClickListener(onMenuItemClickListener);
+            popupMenu.setOnMenuItemClickListener(onSingleProductMenuItemClickListner);
             popupMenu.show();
         });
 

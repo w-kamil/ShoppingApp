@@ -47,7 +47,7 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
         holder.productBarcode.setText(shopping.getProduct().getBarCode());
         holder.shopNameAndAddress.setText(shopping.getShop().getIdentifier() + ", " + shopping.getShop().getAddress());
         holder.date.setText(shopping.getDate().toString());
-        holder.price.setText(shopping.getPrice().toString());
+        holder.price.setText(shopping.getPrice().toString() + " " + holder.price.getContext().getString(R.string.currency));
         holder.eventButton.setOnClickListener(v -> {
             PopupMenu popupMenu = new PopupMenu(holder.eventButton.getContext(),holder.eventButton);
             popupMenu.inflate(R.menu.single_shopping_menu);
