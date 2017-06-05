@@ -1,10 +1,8 @@
 package com.github.w_kamil.shoppingapp.singleProduct;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.PopupMenu;
@@ -15,10 +13,8 @@ import android.widget.Toast;
 
 import com.github.w_kamil.shoppingapp.R;
 import com.github.w_kamil.shoppingapp.dao.Product;
-import com.github.w_kamil.shoppingapp.dao.Shop;
 import com.github.w_kamil.shoppingapp.dao.Shopping;
 import com.github.w_kamil.shoppingapp.dao.ShoppingDatabaseDao;
-import com.github.w_kamil.shoppingapp.shops.ShopsActivity;
 
 import java.util.List;
 
@@ -26,7 +22,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class SingleProductActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
+public class SingleProductActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener, OnSingleShoppingMenuItemClickListener, ShoppingListUpdater {
 
     @BindView(R.id.product_data)
     TextView productDataTextView;
@@ -37,6 +33,7 @@ public class SingleProductActivity extends AppCompatActivity implements PopupMen
     public static final String PRODUCT_BARCODE = "product_barcode";
     private ShoppingDatabaseDao dao;
     private Product product;
+    private Shopping selectedShoppingEntry;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,15 +44,12 @@ public class SingleProductActivity extends AppCompatActivity implements PopupMen
         dao = new ShoppingDatabaseDao(this);
         product = dao.searchProduct(productBarcode);
         productDataTextView.setText(product.getDescription() + "\n" + String.format(getString(R.string.barcode_value), productBarcode));
-        List<Shopping> shoppingList = dao.fetchAllShoppingItemsMatchingSpecificProduct(productBarcode);
-        ShoppingListAdapter shoppingListAdapter = new ShoppingListAdapter(shoppingList, this);
-        shoppingListAdapter.setOnMenuItemClickListener(this);
-        recyclerView.setAdapter(shoppingListAdapter);
+        updateUI();
     }
 
     @OnClick(R.id.add_new_shopping)
     void addNewShoppingEntry() {
-        DialogFragment addShoppingFragment = AddShoppingFragment.newInstance(product);
+        DialogFragment addShoppingFragment = AddShoppingFragment.newInstance(product, this);
         addShoppingFragment.show(getSupportFragmentManager(), "dialog");
 
     }
@@ -68,12 +62,25 @@ public class SingleProductActivity extends AppCompatActivity implements PopupMen
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-        //TODO implement popup menu options
         switch (item.getItemId()) {
             case R.id.delete_shopinng:
-                Toast.makeText(this, "Na ten przycisk usuniesz wpis", Toast.LENGTH_SHORT).show();
+                dao.deleteShopping(selectedShoppingEntry);
+                updateUI();
                 break;
         }
         return false;
     }
+
+    @Override
+    public void setShoppingEntry(Shopping selectedShoppingEntry) {
+        this.selectedShoppingEntry = selectedShoppingEntry;
+    }
+
+    public void updateUI() {
+        List<Shopping> shoppingList = dao.fetchAllShoppingItemsMatchingSpecificProduct(product.getBarCode());
+        ShoppingListAdapter shoppingListAdapter = new ShoppingListAdapter(shoppingList, this);
+        shoppingListAdapter.setOnSingleShoppingMenuItemClickListener(this);
+        recyclerView.setAdapter(shoppingListAdapter);
+    }
+
 }

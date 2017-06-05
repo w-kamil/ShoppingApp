@@ -206,7 +206,7 @@ public class ShoppingDatabaseDao implements IShoppingDatabaseDao {
     @Override
     public int deleteShopping(Shopping singleShoppingItem) {
         database = dbHelper.getWritableDatabase();
-        int deletedRowsQty = new DbContentProvider().delete(ShoppingDatabaseContract.MainTableEntry.TABLE, ShoppingDatabaseContract.MainTableEntry._ID,
+        int deletedRowsQty = new DbContentProvider().delete(ShoppingDatabaseContract.MainTableEntry.TABLE, ShoppingDatabaseContract.MainTableEntry._ID + " = ?",
                 new String[]{singleShoppingItem.getId()});
         database.close();
         return deletedRowsQty;

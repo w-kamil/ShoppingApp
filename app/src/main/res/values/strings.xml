@@ -6,7 +6,7 @@
     <string name="app_name">Shopping</string>
     <string name="barcode_value">Kod kreskowy: %s</string>
     <string name="cancel">Anuluj</string>
-    <string name="change_product_description">Zmień opin produktu</string>
+    <string name="change_product_description">Zmień opis produktu</string>
     <string name="change_shop_address">Zmień adres sklepu</string>
     <string name="currency">zł</string>
     <string name="delete_entry">Usuń wpis</string>

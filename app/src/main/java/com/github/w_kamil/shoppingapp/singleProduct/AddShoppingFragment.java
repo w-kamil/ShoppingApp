@@ -50,12 +50,15 @@ public class AddShoppingFragment extends DialogFragment {
     private ShoppingDatabaseDao dao;
     private Product product;
 
+    private ShoppingListUpdater shoppingListUpdater;
 
-    public static AddShoppingFragment newInstance(Product product){
+
+    public static AddShoppingFragment newInstance(Product product, ShoppingListUpdater updater) {
         AddShoppingFragment fragment = new AddShoppingFragment();
         Bundle args = new Bundle();
         args.putParcelable(PRODUCT_KEY, product);
         fragment.setArguments(args);
+        fragment.setShoppingListUpdater(updater);
         return fragment;
     }
 
@@ -89,8 +92,13 @@ public class AddShoppingFragment extends DialogFragment {
                     BigDecimal price = new BigDecimal(priceEditText.getText().toString());
                     Shopping shoppingToAdd = new Shopping(product, shop, choosenDate, price);
                     dao.addShopping(shoppingToAdd);
+                    shoppingListUpdater.updateUI();
                 })
                 .setNegativeButton(R.string.cancel, null);
         return builder.create();
+    }
+
+    public void setShoppingListUpdater(ShoppingListUpdater shoppingListUpdater) {
+        this.shoppingListUpdater = shoppingListUpdater;
     }
 }

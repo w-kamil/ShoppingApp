@@ -18,7 +18,6 @@ import java.util.List;
 public class ProductsListAdapter extends RecyclerView.Adapter<ProductsListAdapter.MyViewHolder> {
 
     private List<Product> productList = Collections.emptyList();
-//    private PopupMenu.OnMenuItemClickListener onSingleProductMenuItemClickListner;
     private OnSingleProductMenuItemClickListner onSingleProductMenuItemClickListner;
 
     public void setOnSingleProductMenuItemClickListner(OnSingleProductMenuItemClickListner onSingleProductMenuItemClickListner) {
@@ -47,7 +46,6 @@ public class ProductsListAdapter extends RecyclerView.Adapter<ProductsListAdapte
             popupMenu.setOnMenuItemClickListener(onSingleProductMenuItemClickListner);
             popupMenu.show();
         });
-
     }
 
     @Override

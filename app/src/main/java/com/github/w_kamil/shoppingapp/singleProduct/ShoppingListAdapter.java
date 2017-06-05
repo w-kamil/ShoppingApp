@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.github.w_kamil.shoppingapp.R;
 import com.github.w_kamil.shoppingapp.dao.Shopping;
-import com.github.w_kamil.shoppingapp.dao.ShoppingDatabaseDao;
 
 import java.util.Collections;
 import java.util.List;
@@ -22,10 +21,10 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
 
     private List<Shopping> shoppingList = Collections.emptyList();
     LayoutInflater layoutInflater;
-    private PopupMenu.OnMenuItemClickListener onMenuItemClickListener;
+    private OnSingleShoppingMenuItemClickListener onSingleShoppingMenuItemClickListener;
 
-    public void setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener onMenuItemClickListener) {
-        this.onMenuItemClickListener = onMenuItemClickListener;
+    public void setOnSingleShoppingMenuItemClickListener(OnSingleShoppingMenuItemClickListener onSingleShoppingMenuItemClickListener) {
+        this.onSingleShoppingMenuItemClickListener = onSingleShoppingMenuItemClickListener;
     }
 
     public ShoppingListAdapter(List<Shopping> shoppingList, Context context) {
@@ -49,9 +48,10 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
         holder.date.setText(shopping.getDate().toString());
         holder.price.setText(shopping.getPrice().toString() + " " + holder.price.getContext().getString(R.string.currency));
         holder.eventButton.setOnClickListener(v -> {
-            PopupMenu popupMenu = new PopupMenu(holder.eventButton.getContext(),holder.eventButton);
+            PopupMenu popupMenu = new PopupMenu(holder.eventButton.getContext(), holder.eventButton);
+            onSingleShoppingMenuItemClickListener.setShoppingEntry(shopping);
             popupMenu.inflate(R.menu.single_shopping_menu);
-            popupMenu.setOnMenuItemClickListener(onMenuItemClickListener);
+            popupMenu.setOnMenuItemClickListener(onSingleShoppingMenuItemClickListener);
             popupMenu.show();
         });
     }
