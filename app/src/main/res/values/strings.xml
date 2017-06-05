@@ -15,6 +15,8 @@
     <string name="dialog_add_product">Czy chcesz dodać produkt?</string>
     <string name="enter_price">Podaj cenę</string>
     <string name="enter_product_description">Podaj opis produktu</string>
+    <string name="enter_shop_address">Podaj adres sklepu</string>
+    <string name="enter_shop_name">Podaj nazwę sklepu</string>
     <string name="product_is_not_in_database">Produktu %s nie ma w bazie</string>
     <string name="products_list">LISTA PRODUKTÓW</string>
     <string name="rename_shop">Zmień nazwę sklepu</string>
@@ -28,4 +30,6 @@
     <string name="show_shopping_history">Pokaż historię zakupów</string>
     <string name="your_products">Twoje produkty</string>
     <string name="your_shops">Twoje sklepy</string>
+    <string name="adding_new_shop">Dodawanie nowego sklepu</string>
+    <string name="dialog_add_shop">Czy chcesz dodać nowy sklep?</string>
 </resources>
