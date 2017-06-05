@@ -109,11 +109,10 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.goto_products)
     void gotoProductsActivity() {
-        Intent intent = new Intent(this, ProductsActivity.class);
-        startActivity(intent);
+        startActivity(ProductsActivity.createIntent(this, null));
     }
 
     private void gotoSingleProductActivity(String productBarcode) {
-        startActivity(SingleProductActivity.createIntent(productBarcode, this));
+        startActivity(SingleProductActivity.createIntent(this, productBarcode));
     }
 }

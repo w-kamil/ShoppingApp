@@ -6,13 +6,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.database.sqlite.SQLiteQueryBuilder;
-import android.util.Log;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class ShoppingDatabaseDao implements IShoppingDatabaseDao {
 
@@ -47,25 +47,15 @@ public class ShoppingDatabaseDao implements IShoppingDatabaseDao {
     @Override
     public List<Product> fetchAllProductsMatchingSpecificShop(String shopIdentifier) {
         database = dbHelper.getReadableDatabase();
-        String tablesNames = ShoppingDatabaseContract.ProductsEntry.TABLE + ", " + ShoppingDatabaseContract.MainTableEntry.TABLE;
-
-        String[] colunmsNames = ShoppingDatabaseContract.COLUMNS_NAMES_PRODUCTS_LONG;
-        String selection = ShoppingDatabaseContract.MainTableEntry.TABLE + "." + ShoppingDatabaseContract.MainTableEntry.COL_SHOP_IDENTIFIER + " = ?";
-        String[] selectionArgs = {shopIdentifier};
-        cursor = new DbContentProvider().joinQuery(tablesNames, colunmsNames, selection, selectionArgs);
-        List<Product> productsList = new ArrayList<>();
+        cursor = new DbContentProvider().query(ShoppingDatabaseContract.MainTableEntry.TABLE, new String[]{ShoppingDatabaseContract.MainTableEntry.COL_PRODUCT_BARCODE}
+                , ShoppingDatabaseContract.MainTableEntry.COL_SHOP_IDENTIFIER + " = ?", new String[]{shopIdentifier});
+        Set<Product> productSet = new TreeSet<>();
         while (cursor.moveToNext()) {
-            int indexId = cursor.getColumnIndex(ShoppingDatabaseContract.ProductsEntry._ID);
-            int procuctId = cursor.getInt(indexId);
-            int indexBarcode = cursor.getColumnIndex(ShoppingDatabaseContract.ProductsEntry.COL_PRODUUCTS_BARCODE);
-            String barcode = cursor.getString(indexBarcode);
-            int indexDescription = cursor.getColumnIndex(ShoppingDatabaseContract.ProductsEntry.COL_PRODUCTS_DESCRIPTION);
-            String description = cursor.getString(indexDescription);
-            productsList.add(new Product(barcode, description));
+            productSet.add(searchProduct(cursor.getString(0)));
         }
         cursor.close();
         database.close();
-        return productsList;
+        return new ArrayList<>(productSet);
     }
 
     @Override
@@ -217,12 +207,6 @@ public class ShoppingDatabaseDao implements IShoppingDatabaseDao {
 
         protected Cursor query(String tableName, String[] columnNames, String selection, String[] selectionArgs) {
             return database.query(tableName, columnNames, selection, selectionArgs, null, null, null);
-        }
-
-        protected Cursor joinQuery(String tablesNames, String[] columnNames, String selection, String[] selectionArgs) {
-            SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
-            queryBuilder.setTables(tablesNames);
-            return queryBuilder.query(database, columnNames, selection, selectionArgs, null, null, null);
         }
 
         protected long insert(String tableName, ContentValues values) {

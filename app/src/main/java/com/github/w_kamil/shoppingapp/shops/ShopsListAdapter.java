@@ -20,10 +20,10 @@ import java.util.List;
 public class ShopsListAdapter extends RecyclerView.Adapter<ShopsListAdapter.MyViewHolder> {
 
     private List<Shop> shopsList = Collections.emptyList();
-    private PopupMenu.OnMenuItemClickListener onMenuItemClickListener;
+    private OnSingleShopMenuItemClickListener onSingleShopMenuItemClickListener;
 
-    public void setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener onMenuItemClickListener) {
-        this.onMenuItemClickListener = onMenuItemClickListener;
+    public void setOnSingleShopMenuItemClickListener(OnSingleShopMenuItemClickListener onSingleShopMenuItemClickListener) {
+        this.onSingleShopMenuItemClickListener = onSingleShopMenuItemClickListener;
     }
 
 
@@ -45,7 +45,8 @@ public class ShopsListAdapter extends RecyclerView.Adapter<ShopsListAdapter.MyVi
         holder.eventButton.setOnClickListener(v -> {
             PopupMenu popupMenu = new PopupMenu(holder.eventButton.getContext(), holder.eventButton);
             popupMenu.inflate(R.menu.single_shop_popup_menu);
-            popupMenu.setOnMenuItemClickListener(onMenuItemClickListener);
+            popupMenu.setOnMenuItemClickListener(onSingleShopMenuItemClickListener);
+            onSingleShopMenuItemClickListener.setSelectedShopEntry(shop);
             popupMenu.show();
         });
     }

@@ -1,10 +1,8 @@
 package com.github.w_kamil.shoppingapp.shops;
 
-import android.content.DialogInterface;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.ActionMenuView;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
@@ -18,21 +16,22 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.github.w_kamil.shoppingapp.R;
-import com.github.w_kamil.shoppingapp.dao.Product;
 import com.github.w_kamil.shoppingapp.dao.Shop;
 import com.github.w_kamil.shoppingapp.dao.ShoppingDatabaseDao;
+import com.github.w_kamil.shoppingapp.products.ProductsActivity;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ShopsActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
-
+public class ShopsActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener, OnSingleShopMenuItemClickListener {
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     private ShoppingDatabaseDao dao;
+
+    private Shop selectedShopEntry;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,13 +92,12 @@ public class ShopsActivity extends AppCompatActivity implements PopupMenu.OnMenu
         }
     }
 
-
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         //TODO implement popup menu options and move products in shop to onitemclickliestener
         switch (item.getItemId()) {
             case R.id.show_products_in_shop:
-                Toast.makeText(this, "Na ten przycisk przejdziesz do list produktow", Toast.LENGTH_SHORT).show();
+                gotoProductstActivity(selectedShopEntry);
                 break;
             case R.id.rename_shop_identifier:
                 Toast.makeText(this, "Tu będziesz mógł zmienić nazwę sklepu", Toast.LENGTH_SHORT).show();
@@ -115,10 +113,19 @@ public class ShopsActivity extends AppCompatActivity implements PopupMenu.OnMenu
         return false;
     }
 
+
+    public void setSelectedShopEntry(Shop selectedShopEntry) {
+        this.selectedShopEntry = selectedShopEntry;
+    }
+
+    private void gotoProductstActivity(Shop singleShopToShow) {
+        startActivity(ProductsActivity.createIntent(this, singleShopToShow));
+    }
+
     private void updateUI() {
         List<Shop> shops = dao.fetchAllShops();
         ShopsListAdapter adapter = new ShopsListAdapter(shops);
-        adapter.setOnMenuItemClickListener(this);
+        adapter.setOnSingleShopMenuItemClickListener(this);
         recyclerView.setAdapter(adapter);
     }
 }

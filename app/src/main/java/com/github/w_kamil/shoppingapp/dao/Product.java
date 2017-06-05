@@ -3,8 +3,9 @@ package com.github.w_kamil.shoppingapp.dao;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
-public class Product implements Parcelable {
+public class Product implements Parcelable, Comparable<Product> {
 
     private final String barCode;
     private String description;
@@ -57,5 +58,11 @@ public class Product implements Parcelable {
             return new Product[size];
         }
     };
+
+
+    @Override
+    public int compareTo(@NonNull Product o) {
+        return this.description.compareTo(o.description);
+    }
 }
 

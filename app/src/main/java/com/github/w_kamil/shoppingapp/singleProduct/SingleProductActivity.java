@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
@@ -54,7 +56,7 @@ public class SingleProductActivity extends AppCompatActivity implements PopupMen
 
     }
 
-    public static Intent createIntent(String productBarcode, Context context) {
+    public static Intent createIntent(Context context, String productBarcode) {
         Intent intent = new Intent(context, SingleProductActivity.class);
         intent.putExtra(PRODUCT_BARCODE, productBarcode);
         return intent;
@@ -80,6 +82,7 @@ public class SingleProductActivity extends AppCompatActivity implements PopupMen
         List<Shopping> shoppingList = dao.fetchAllShoppingItemsMatchingSpecificProduct(product.getBarCode());
         ShoppingListAdapter shoppingListAdapter = new ShoppingListAdapter(shoppingList, this);
         shoppingListAdapter.setOnSingleShoppingMenuItemClickListener(this);
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(shoppingListAdapter);
     }
 
