@@ -156,8 +156,10 @@ public class ShoppingDatabaseDao implements IShoppingDatabaseDao {
             int indexDescription = cursor.getColumnIndex(ShoppingDatabaseContract.ProductsEntry.COL_PRODUCTS_DESCRIPTION);
             String description = cursor.getString(indexDescription);
             Product product = new Product(productBarcode, description);
+            database.close();
             return product;
         } else {
+            database.close();
             return null;
         }
 
@@ -174,8 +176,10 @@ public class ShoppingDatabaseDao implements IShoppingDatabaseDao {
             int indexShopAddress = cursor.getColumnIndex(ShoppingDatabaseContract.ShopsEntry.COL_SHOP_ADDRESS);
             String shopAddress = cursor.getString(indexShopAddress);
             Shop shop = new Shop(shopIdentifier, shopAddress);
+            database.close();
             return shop;
         } else {
+            database.close();
             return null;
         }
     }
@@ -210,12 +214,12 @@ public class ShoppingDatabaseDao implements IShoppingDatabaseDao {
         }
 
         protected long insert(String tableName, ContentValues values) {
-            database = dbHelper.getWritableDatabase();
+//            database = dbHelper.getWritableDatabase();
             return database.insertWithOnConflict(tableName, null, values, SQLiteDatabase.CONFLICT_ROLLBACK);
         }
 
         protected int delete(String tableName, String selectionString, String[] selectionArgs) {
-            database = dbHelper.getWritableDatabase();
+//            database = dbHelper.getWritableDatabase();
             return database.delete(tableName, selectionString, selectionArgs);
         }
 

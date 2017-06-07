@@ -1,6 +1,5 @@
 package com.github.w_kamil.shoppingapp.dao;
 
-
 import java.util.List;
 
 public interface IShoppingDatabaseDao {

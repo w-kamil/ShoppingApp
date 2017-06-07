@@ -30,7 +30,6 @@ public class ShopsActivity extends AppCompatActivity implements PopupMenu.OnMenu
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     private ShoppingDatabaseDao dao;
-
     private Shop selectedShopEntry;
 
     @Override
@@ -79,9 +78,13 @@ public class ShopsActivity extends AppCompatActivity implements PopupMenu.OnMenu
                             Toast.makeText(this, getResources().getString(R.string.enter_shop_address), Toast.LENGTH_SHORT).show();
                         } else {
                             Shop shopToAdd = new Shop(shopNameEditText.getText().toString(), shopAddressEditText.getText().toString());
-                            dao.addShop(shopToAdd);
-                            updateUI();
-                            addNewShopDialog.dismiss();
+                            if (dao.searchShop(shopToAdd.getIdentifier()) != null) {
+                                Toast.makeText(this, shopToAdd.getIdentifier() + " " + getString(R.string.shop_name_already_exists), Toast.LENGTH_LONG).show();
+                            } else {
+                                dao.addShop(shopToAdd);
+                                updateUI();
+                                addNewShopDialog.dismiss();
+                            }
                         }
                     });
                 });

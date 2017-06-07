@@ -3,6 +3,7 @@
     <string name="add_new_shop">Dodaj nowy sklep</string>
     <string name="add_product">Dodaj produkt</string>
     <string name="add_shopping_entry">Dodaj wpis</string>
+    <string name="adding_new_shop">Dodawanie nowego sklepu</string>
     <string name="app_name">Shopping</string>
     <string name="barcode_value">Kod kreskowy: %s</string>
     <string name="cancel">Anuluj</string>
@@ -13,6 +14,7 @@
     <string name="delete_product">Usuń produkt</string>
     <string name="delete_shop">Usuń sklep</string>
     <string name="dialog_add_product">Czy chcesz dodać produkt?</string>
+    <string name="dialog_add_shop">Czy chcesz dodać nowy sklep?</string>
     <string name="enter_price">Podaj cenę</string>
     <string name="enter_product_description">Podaj opis produktu</string>
     <string name="enter_shop_address">Podaj adres sklepu</string>
@@ -24,12 +26,11 @@
     <string name="scan_product">Skanuj produkt</string>
     <string name="scan_product_upper_case">SKANUJ PRODUKT</string>
     <string name="settings">Ustawienia</string>
+    <string name="shop_name_already_exists"> już istnieje w bazie. Podaj inną nazwę sklepu</string>
     <string name="shopping_history">Historia zakupów produktu</string>
     <string name="shops_list">LISTA SKLEPÓW</string>
     <string name="show_products_list_in_shop">Lista produktów dostępnych w sklepie</string>
     <string name="show_shopping_history">Pokaż historię zakupów</string>
     <string name="your_products">Twoje produkty</string>
     <string name="your_shops">Twoje sklepy</string>
-    <string name="adding_new_shop">Dodawanie nowego sklepu</string>
-    <string name="dialog_add_shop">Czy chcesz dodać nowy sklep?</string>
 </resources>
