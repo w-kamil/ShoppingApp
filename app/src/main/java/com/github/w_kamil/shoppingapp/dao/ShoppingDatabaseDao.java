@@ -137,6 +137,26 @@ public class ShoppingDatabaseDao implements IShoppingDatabaseDao {
     }
 
     @Override
+    public int renameShop(Shop shop, String newShopName) {
+        database = dbHelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(ShoppingDatabaseContract.ShopsEntry.COL_SHOP_IDENTIFIER, newShopName);
+        int updatedRows = new DbContentProvider().update(ShoppingDatabaseContract.ShopsEntry.TABLE,
+                contentValues,ShoppingDatabaseContract.ShopsEntry.COL_SHOP_IDENTIFIER + " = ?", new String[]{shop.getIdentifier()});
+        return updatedRows;
+    }
+
+    @Override
+    public int changeShopAddress(Shop shop, String newShopAddress) {
+        database = dbHelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(ShoppingDatabaseContract.ShopsEntry.COL_SHOP_ADDRESS, newShopAddress);
+        int updatedRows = new DbContentProvider().update(ShoppingDatabaseContract.ShopsEntry.TABLE,
+                contentValues, ShoppingDatabaseContract.ShopsEntry.COL_SHOP_IDENTIFIER + " = ?", new String[]{shop.getIdentifier()});
+        return updatedRows;
+    }
+
+    @Override
     public int deleteShop(String shopIdentifier) {
         database = dbHelper.getWritableDatabase();
         int deletedRowsQty = new DbContentProvider().delete(ShoppingDatabaseContract.ShopsEntry.TABLE, ShoppingDatabaseContract.ShopsEntry.COL_SHOP_IDENTIFIER,
@@ -221,6 +241,10 @@ public class ShoppingDatabaseDao implements IShoppingDatabaseDao {
         protected int delete(String tableName, String selectionString, String[] selectionArgs) {
 //            database = dbHelper.getWritableDatabase();
             return database.delete(tableName, selectionString, selectionArgs);
+        }
+
+        protected int update(String tableName, ContentValues values, String whereClause, String[] wherenArgs){
+            return database.update(tableName, values, whereClause, wherenArgs);
         }
 
     }

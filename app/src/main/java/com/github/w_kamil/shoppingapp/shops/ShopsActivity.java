@@ -1,5 +1,6 @@
 package com.github.w_kamil.shoppingapp.shops;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -97,16 +98,56 @@ public class ShopsActivity extends AppCompatActivity implements PopupMenu.OnMenu
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-        //TODO implement popup menu options and move products in shop to onitemclickliestener
+        //TODO implement shopdeleting and move products in shop to list onitemclickliestener
         switch (item.getItemId()) {
             case R.id.show_products_in_shop:
                 gotoProductstActivity(selectedShopEntry);
                 break;
             case R.id.rename_shop_identifier:
-                Toast.makeText(this, "Tu będziesz mógł zmienić nazwę sklepu", Toast.LENGTH_SHORT).show();
+//                View dialogLayout = inflateUpdatingDialogLayout();
+                AlertDialog renameShopDialog = new AlertDialog.Builder(this).
+                        setTitle(R.string.enter_new_shop_name).
+                        setView(inflateUpdatingDialogLayout()).
+                        setPositiveButton(R.string.confirm, null).
+                        setNegativeButton(R.string.cancel, null).
+                        create();
+                renameShopDialog.setOnShowListener(dialog -> {
+                    Button positiveButton = renameShopDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                    final EditText shopNameEditText = (EditText) renameShopDialog.findViewById(R.id.data_edit_text);
+                    positiveButton.setOnClickListener(v -> {
+                        if(shopNameEditText.getText().length() == 0){
+                            Toast.makeText(this, getResources().getString(R.string.enter_shop_name), Toast.LENGTH_SHORT).show();
+                        } else {
+                            dao.renameShop(selectedShopEntry, shopNameEditText.getText().toString());
+                            updateUI();
+                            renameShopDialog.dismiss();
+                        }
+                    });
+                });
+                renameShopDialog.show();
                 break;
             case R.id.change_shop_address:
-                Toast.makeText(this, "Tu będziesz mógł zmienić adres sklepu", Toast.LENGTH_SHORT).show();
+//                View dialogLayout = inflateUpdatingDialogLayout();
+                AlertDialog changeShopAddressDialog = new AlertDialog.Builder(this).
+                        setTitle(R.string.exner_new_shop_address).
+                        setView(inflateUpdatingDialogLayout()).
+                        setPositiveButton(R.string.confirm, null).
+                        setNegativeButton(R.string.cancel, null).
+                        create();
+                changeShopAddressDialog.setOnShowListener(dialog -> {
+                    Button positiveButton = changeShopAddressDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                    final EditText shopAddressEditText = (EditText) changeShopAddressDialog.findViewById(R.id.data_edit_text);
+                    positiveButton.setOnClickListener(v -> {
+                        if(shopAddressEditText.getText().length() == 0){
+                            Toast.makeText(this, getResources().getString(R.string.enter_shop_address), Toast.LENGTH_SHORT).show();
+                        } else {
+                            dao.changeShopAddress(selectedShopEntry, shopAddressEditText.getText().toString());
+                            updateUI();
+                            changeShopAddressDialog.dismiss();
+                        }
+                    });
+                });
+                changeShopAddressDialog.show();
                 break;
             case R.id.delete_shop:
                 Toast.makeText(this, "Tym przeyciskiem będziesz mógł usunąc dany sklep", Toast.LENGTH_SHORT).show();
@@ -114,6 +155,11 @@ public class ShopsActivity extends AppCompatActivity implements PopupMenu.OnMenu
         }
 
         return false;
+    }
+
+    private View inflateUpdatingDialogLayout() {
+        LayoutInflater inflater = getLayoutInflater();
+        return inflater.inflate(R.layout.dialog_update_shop, null);
     }
 
 
