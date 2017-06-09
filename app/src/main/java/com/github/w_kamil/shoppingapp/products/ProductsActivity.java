@@ -49,6 +49,7 @@ public class ProductsActivity extends AppCompatActivity implements PopupMenu.OnM
     private List<Product> products;
 
 
+
     public static Intent createIntent(Context context, Shop singleShopToShow) {
         Intent intent = new Intent(context, ProductsActivity.class);
         intent.putExtra(SINGLE_SHOP_TO_SHOW_KEY, singleShopToShow);
@@ -99,7 +100,10 @@ public class ProductsActivity extends AppCompatActivity implements PopupMenu.OnM
                 Toast.makeText(this, "Tu będziesz mógł zmienić opis produktu", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.delete_product:
-                Toast.makeText(this, "Tym przeyciskiem będziesz mógł usunąc dany produkt z listy", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "Tym przeyciskiem będziesz mógł usunąc dany produkt z listy", Toast.LENGTH_SHORT).show();
+                dao.deleteProduct(searchedProduct);
+                updateUI();
+
                 break;
         }
         return false;
@@ -159,6 +163,8 @@ public class ProductsActivity extends AppCompatActivity implements PopupMenu.OnM
     private void gotoSingleProductActivity(Product product) {
         startActivity(SingleProductActivity.createIntent(this, product));
     }
+
+
 
 
     @Override
