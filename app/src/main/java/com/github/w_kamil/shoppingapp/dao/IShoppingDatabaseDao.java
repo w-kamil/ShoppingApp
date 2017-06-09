@@ -5,17 +5,17 @@ import java.util.List;
 public interface IShoppingDatabaseDao {
 
     List<Product> fetchAllProducts();
-    List<Product> fetchAllProductsMatchingSpecificShop(String shopIdentifier);
+    List<Product> fetchAllProductsMatchingSpecificShop(Shop shopToSearch);
     List<Shop> fetchAllShops();
-    List<Shopping> fetchAllShoppingItemsMatchingSpecificProduct(String productBarcode);
+    List<Shopping> fetchAllShoppingItemsMatchingSpecificProduct(Product productToSearch);
     long addProduct(Product product);
     int deleteProduct(Product product);
     long addShop(Shop shop);
     int renameShop (Shop shop, String newShopName);
     int changeShopAddress (Shop shop, String newShopAddress);
-    int deleteShop(String shopIdentifier);
-    Product searchProduct (String productBarcode);
-    Shop searchShop (String shopIdentifier);
+    int deleteShop(Shop shopToDeleteFromDb);
+    Product searchProduct (Product productToSearch);
+    Shop searchShop (Shop shopToSearch);
     long addShopping(Shopping singleShoppingItem);
     int deleteShopping (Shopping singleShoppingItem);
 }
