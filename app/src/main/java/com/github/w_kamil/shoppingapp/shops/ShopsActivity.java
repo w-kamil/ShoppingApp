@@ -148,7 +148,7 @@ public class ShopsActivity extends AppCompatActivity implements PopupMenu.OnMenu
             case R.id.delete_shop:
              
                 dao.deleteShop(selectedShopEntry);
-                        updateUI();
+                updateUI();
                 break;
         }
 
