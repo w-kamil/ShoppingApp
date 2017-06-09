@@ -146,7 +146,9 @@ public class ShopsActivity extends AppCompatActivity implements PopupMenu.OnMenu
                 changeShopAddressDialog.show();
                 break;
             case R.id.delete_shop:
-                Toast.makeText(this, "Tym przeyciskiem będziesz mógł usunąc dany sklep", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "Tym przeyciskiem będziesz mógł usunąc dany sklep", Toast.LENGTH_SHORT).show();
+                dao.deleteShop(selectedShopEntry);
+                        updateUI();
                 break;
         }
 
