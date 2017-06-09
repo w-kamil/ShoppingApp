@@ -75,8 +75,8 @@ public class MainActivity extends AppCompatActivity {
                             if (descriptopnInputEditText.getText().length() == 0) {
                                 Toast.makeText(this, getResources().getString(R.string.enter_product_description), Toast.LENGTH_SHORT).show();
                             } else {
-                                Product productToAdd = new Product(scanResult, descriptopnInputEditText.getText().toString());
-                                dao.addProduct(productToAdd);
+                                product = new Product(scanResult, descriptopnInputEditText.getText().toString());
+                                dao.addProduct(product);
                                 gotoSingleProductActivity(product);
                                 createNewProductDialog.dismiss();
                             }
