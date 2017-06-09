@@ -49,7 +49,6 @@ public class ProductsActivity extends AppCompatActivity implements PopupMenu.OnM
     private List<Product> products;
 
 
-
     public static Intent createIntent(Context context, Shop singleShopToShow) {
         Intent intent = new Intent(context, ProductsActivity.class);
         intent.putExtra(SINGLE_SHOP_TO_SHOW_KEY, singleShopToShow);
@@ -64,7 +63,6 @@ public class ProductsActivity extends AppCompatActivity implements PopupMenu.OnM
         products = Collections.emptyList();
         singleShopToShow = getIntent().getExtras().getParcelable(SINGLE_SHOP_TO_SHOW_KEY);
         dao = new ShoppingDatabaseDao(this);
-
         updateUI();
     }
 
@@ -97,13 +95,30 @@ public class ProductsActivity extends AppCompatActivity implements PopupMenu.OnM
                 gotoSingleProductActivity(searchedProduct);
                 break;
             case R.id.change_product_description:
-                Toast.makeText(this, "Tu będziesz mógł zmienić opis produktu", Toast.LENGTH_SHORT).show();
+                AlertDialog changeProductDescriptionDialog = new AlertDialog.Builder(this).
+                        setTitle(R.string.enter_new_product_description).
+                        setView(getLayoutInflater().inflate(R.layout.dialog_update_shop, null)).
+                        setPositiveButton(R.string.confirm, null).
+                        setNegativeButton(R.string.cancel, null).
+                        create();
+                changeProductDescriptionDialog.setOnShowListener(dialog -> {
+                    Button positiveButton = changeProductDescriptionDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                    final EditText productDescriptionEditText = (EditText) changeProductDescriptionDialog.findViewById(R.id.data_edit_text);
+                    positiveButton.setOnClickListener(v -> {
+                        if (productDescriptionEditText.getText().length() == 0) {
+                            Toast.makeText(this, getResources().getString(R.string.enter_shop_name), Toast.LENGTH_SHORT).show();
+                        } else {
+                            dao.changeProductDescription(searchedProduct, productDescriptionEditText.getText().toString());
+                            updateUI();
+                            changeProductDescriptionDialog.dismiss();
+                        }
+                    });
+                });
+                changeProductDescriptionDialog.show();
                 break;
             case R.id.delete_product:
-                //Toast.makeText(this, "Tym przeyciskiem będziesz mógł usunąc dany produkt z listy", Toast.LENGTH_SHORT).show();
                 dao.deleteProduct(searchedProduct);
                 updateUI();
-
                 break;
         }
         return false;
@@ -164,8 +179,6 @@ public class ProductsActivity extends AppCompatActivity implements PopupMenu.OnM
     private void gotoSingleProductActivity(Product product) {
         startActivity(SingleProductActivity.createIntent(this, product));
     }
-
-
 
 
     @Override
