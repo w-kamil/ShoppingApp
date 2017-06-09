@@ -15,6 +15,7 @@ public interface IShoppingDatabaseDao {
     int changeShopAddress (Shop shop, String newShopAddress);
     int deleteShop(Shop shopToDeleteFromDb);
     Product searchProduct (Integer productToSearchId);
+    Product searchProductByBarcode(String barcode);
     Shop searchShop (Integer shopToSearchId);
     long addShopping(Shopping singleShoppingItem);
     int deleteShopping (Shopping singleShoppingItem);

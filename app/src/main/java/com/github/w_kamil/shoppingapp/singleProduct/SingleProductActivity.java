@@ -32,7 +32,7 @@ public class SingleProductActivity extends AppCompatActivity implements PopupMen
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
 
-    public static final String PRODUCT_BARCODE = "product_barcode";
+    public static final String PRODUCT_KEY = "product_key";
     private ShoppingDatabaseDao dao;
     private Product product;
     private Shopping selectedShoppingEntry;
@@ -42,10 +42,9 @@ public class SingleProductActivity extends AppCompatActivity implements PopupMen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_product);
         ButterKnife.bind(this);
-        String productBarcode = getIntent().getExtras().getString(PRODUCT_BARCODE);
+        product = getIntent().getExtras().getParcelable(PRODUCT_KEY);
         dao = new ShoppingDatabaseDao(this);
-        product = dao.searchProduct(productBarcode);
-        productDataTextView.setText(product.getDescription() + "\n" + String.format(getString(R.string.barcode_value), productBarcode));
+        productDataTextView.setText(product.getDescription() + "\n" + String.format(getString(R.string.barcode_value), product.getBarCode()));
         updateUI();
     }
 
@@ -56,9 +55,9 @@ public class SingleProductActivity extends AppCompatActivity implements PopupMen
 
     }
 
-    public static Intent createIntent(Context context, String productBarcode) {
+    public static Intent createIntent(Context context, Product product) {
         Intent intent = new Intent(context, SingleProductActivity.class);
-        intent.putExtra(PRODUCT_BARCODE, productBarcode);
+        intent.putExtra(PRODUCT_KEY, product);
         return intent;
     }
 
@@ -79,7 +78,7 @@ public class SingleProductActivity extends AppCompatActivity implements PopupMen
     }
 
     public void updateUI() {
-        List<Shopping> shoppingList = dao.fetchAllShoppingItemsMatchingSpecificProduct(product.getBarCode());
+        List<Shopping> shoppingList = dao.fetchAllShoppingItemsMatchingSpecificProduct(product);
         ShoppingListAdapter shoppingListAdapter = new ShoppingListAdapter(shoppingList, this);
         shoppingListAdapter.setOnSingleShoppingMenuItemClickListener(this);
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));

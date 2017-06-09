@@ -184,6 +184,25 @@ public class ShoppingDatabaseDao implements IShoppingDatabaseDao {
     }
 
     @Override
+    public Product searchProductByBarcode(String barcode) {
+        database = dbHelper.getReadableDatabase();
+        Cursor cursor = new DbContentProvider().query(ShoppingDatabaseContract.ProductsEntry.TABLE, null,
+                ShoppingDatabaseContract.ProductsEntry.COL_PRODUUCTS_BARCODE + " = ?", new String[]{barcode});
+        if (cursor.moveToNext()) {
+            int indexId = cursor.getColumnIndex(ShoppingDatabaseContract.ProductsEntry._ID);
+            int id = cursor.getInt(indexId);
+            int indexDescription = cursor.getColumnIndex(ShoppingDatabaseContract.ProductsEntry.COL_PRODUCTS_DESCRIPTION);
+            String description = cursor.getString(indexDescription);
+            Product product = new Product(id, barcode, description);
+            database.close();
+            return product;
+        } else {
+            database.close();
+            return null;
+        }
+    }
+
+    @Override
     public Shop searchShop(Integer shopToSearchId) {
         database = dbHelper.getReadableDatabase();
         Cursor cursor = new DbContentProvider().query(ShoppingDatabaseContract.ShopsEntry.TABLE, null,

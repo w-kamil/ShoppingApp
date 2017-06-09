@@ -43,7 +43,7 @@ public class ProductsActivity extends AppCompatActivity implements PopupMenu.OnM
     RecyclerView recyclerView;
 
     private String scanResult;
-    private String searchedProductBarcode;
+    private Product searchedProduct;
     private Shop singleShopToShow;
     private IShoppingDatabaseDao dao;
     private List<Product> products;
@@ -93,7 +93,7 @@ public class ProductsActivity extends AppCompatActivity implements PopupMenu.OnM
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.show_shopping_history:
-                gotoSingleProductActivity(searchedProductBarcode);
+                gotoSingleProductActivity(searchedProduct);
                 break;
             case R.id.change_product_description:
                 Toast.makeText(this, "Tu będziesz mógł zmienić opis produktu", Toast.LENGTH_SHORT).show();
@@ -115,8 +115,8 @@ public class ProductsActivity extends AppCompatActivity implements PopupMenu.OnM
                 Toast.makeText(this, R.string.scan_cancelled, Toast.LENGTH_SHORT).show();
             } else {
                 scanResult = intentResult.getContents();
-                if (dao.searchProduct(scanResult) != null) {
-                    gotoSingleProductActivity(scanResult);
+                if (dao.searchProduct(Integer.parseInt(scanResult)) != null) {
+                    gotoSingleProductActivity(searchedProduct);
                 } else {
                     AlertDialog createNewProductDialog = new AlertDialog.Builder(this)
                             .setTitle(String.format(getString(R.string.product_is_not_in_database), scanResult))
@@ -134,7 +134,7 @@ public class ProductsActivity extends AppCompatActivity implements PopupMenu.OnM
                             } else {
                                 Product productToAdd = new Product(scanResult, descriptopnInputEditText.getText().toString());
                                 dao.addProduct(productToAdd);
-                                gotoSingleProductActivity(scanResult);
+                                gotoSingleProductActivity(searchedProduct);
                                 createNewProductDialog.dismiss();
                             }
                         });
@@ -156,19 +156,19 @@ public class ProductsActivity extends AppCompatActivity implements PopupMenu.OnM
         integrator.initiateScan();
     }
 
-    private void gotoSingleProductActivity(String productBarcode) {
-        startActivity(SingleProductActivity.createIntent(this, productBarcode));
+    private void gotoSingleProductActivity(Product product) {
+        startActivity(SingleProductActivity.createIntent(this, product));
     }
 
 
     @Override
-    public void setSearchedProductBarcode(String selectedProductBarcode) {
-        this.searchedProductBarcode = selectedProductBarcode;
+    public void setSearchedProduct(Product product) {
+        this.searchedProduct = product;
     }
 
     private void updateUI() {
         if (singleShopToShow != null) {
-            products = dao.fetchAllProductsMatchingSpecificShop(singleShopToShow.getIdentifier());
+            products = dao.fetchAllProductsMatchingSpecificShop(singleShopToShow);
         } else {
             products = dao.fetchAllProducts();
         }

@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private String scanResult;
     private static final String SCAN_RESULT_KEY = "scanResultKey";
     private ShoppingDatabaseDao dao;
+    private Product product;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +56,9 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, R.string.scan_cancelled, Toast.LENGTH_SHORT).show();
             } else {
                 scanResult = intentResult.getContents();
-                if (dao.searchProduct(scanResult) != null) {
-                    gotoSingleProductActivity(scanResult);
+                product = dao.searchProductByBarcode(scanResult);
+                if (product != null) {
+                    gotoSingleProductActivity(product);
                 } else {
                     AlertDialog createNewProductDialog = new AlertDialog.Builder(this)
                             .setTitle(String.format(getString(R.string.product_is_not_in_database), scanResult))
@@ -75,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
                             } else {
                                 Product productToAdd = new Product(scanResult, descriptopnInputEditText.getText().toString());
                                 dao.addProduct(productToAdd);
-                                gotoSingleProductActivity(scanResult);
+                                gotoSingleProductActivity(product);
                                 createNewProductDialog.dismiss();
                             }
                         });
@@ -109,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(ProductsActivity.createIntent(this, null));
     }
 
-    private void gotoSingleProductActivity(String productBarcode) {
-        startActivity(SingleProductActivity.createIntent(this, productBarcode));
+    private void gotoSingleProductActivity(Product product) {
+        startActivity(SingleProductActivity.createIntent(this, product));
     }
 }

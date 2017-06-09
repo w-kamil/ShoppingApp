@@ -41,7 +41,7 @@ public class ProductsListAdapter extends RecyclerView.Adapter<ProductsListAdapte
         holder.productBarcode.setText(String.format(holder.productBarcode.getContext().getString(R.string.barcode_value), product.getBarCode()));
         holder.eventButton.setOnClickListener(v -> {
             PopupMenu popupMenu = new PopupMenu(holder.eventButton.getContext(), holder.eventButton);
-            onSingleProductMenuItemClickListner.setSearchedProductBarcode(product.getBarCode());
+            onSingleProductMenuItemClickListner.setSearchedProduct(product);
             popupMenu.inflate(R.menu.single_product_popup_menu);
             popupMenu.setOnMenuItemClickListener(onSingleProductMenuItemClickListner);
             popupMenu.show();
