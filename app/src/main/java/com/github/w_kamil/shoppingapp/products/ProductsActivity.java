@@ -134,7 +134,7 @@ public class ProductsActivity extends AppCompatActivity implements PopupMenu.OnM
                             } else {
                                 Product productToAdd = new Product(scanResult, descriptopnInputEditText.getText().toString());
                                 dao.addProduct(productToAdd);
-                                gotoSingleProductActivity(searchedProduct);
+                                gotoSingleProductActivity(productToAdd);
                                 createNewProductDialog.dismiss();
                             }
                         });

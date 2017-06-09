@@ -100,7 +100,7 @@ public class ShopsActivity extends AppCompatActivity implements PopupMenu.OnMenu
                 gotoProductstActivity(selectedShopEntry);
                 break;
             case R.id.rename_shop_identifier:
-//                View dialogLayout = inflateUpdatingDialogLayout();
+
                 AlertDialog renameShopDialog = new AlertDialog.Builder(this).
                         setTitle(R.string.enter_new_shop_name).
                         setView(inflateUpdatingDialogLayout()).
@@ -123,7 +123,7 @@ public class ShopsActivity extends AppCompatActivity implements PopupMenu.OnMenu
                 renameShopDialog.show();
                 break;
             case R.id.change_shop_address:
-//                View dialogLayout = inflateUpdatingDialogLayout();
+
                 AlertDialog changeShopAddressDialog = new AlertDialog.Builder(this).
                         setTitle(R.string.exner_new_shop_address).
                         setView(inflateUpdatingDialogLayout()).
@@ -146,7 +146,8 @@ public class ShopsActivity extends AppCompatActivity implements PopupMenu.OnMenu
                 changeShopAddressDialog.show();
                 break;
             case R.id.delete_shop:
-                Toast.makeText(this, "Tym przeyciskiem będziesz mógł usunąc dany sklep", Toast.LENGTH_SHORT).show();
+                dao.deleteShop(selectedShopEntry);
+                updateUI();
                 break;
         }
 
