@@ -114,6 +114,8 @@ public class ShoppingDatabaseDao implements IShoppingDatabaseDao {
     @Override
     public int deleteProduct(Product product) {
         database = dbHelper.getWritableDatabase();
+        new DbContentProvider().delete(ShoppingDatabaseContract.MainTableEntry.TABLE, ShoppingDatabaseContract.MainTableEntry.COL_PRODUCT_ID + " = ?",
+                new String[]{String.valueOf(product.getId())});
         int deletedRowsQty = new DbContentProvider().delete(ShoppingDatabaseContract.ProductsEntry.TABLE,
                 ShoppingDatabaseContract.ProductsEntry._ID + " = ?", new String[]{String.valueOf(product.getId())});
         database.close();
@@ -154,10 +156,12 @@ public class ShoppingDatabaseDao implements IShoppingDatabaseDao {
     @Override
     public int deleteShop(Shop shopToDeleteFromDb) {
         database = dbHelper.getWritableDatabase();
+        new DbContentProvider().delete(ShoppingDatabaseContract.MainTableEntry.TABLE, ShoppingDatabaseContract.MainTableEntry.COL_SHOP_ID + " = ?",
+                new String[]{String.valueOf(shopToDeleteFromDb.getId())});
         int deletedRows = new DbContentProvider().delete(ShoppingDatabaseContract.ShopsEntry.TABLE, ShoppingDatabaseContract.ShopsEntry._ID + " = ?",
-                new String[]{String.valueOf(shopToDeleteFromDb.getId())})
-        return deletedRows;
+                new String[]{String.valueOf(shopToDeleteFromDb.getId())});
         database.close();
+        return deletedRows;
     }
 
     @Override
@@ -205,8 +209,8 @@ public class ShoppingDatabaseDao implements IShoppingDatabaseDao {
         ContentValues contentValues = new ContentValues();
         contentValues.put(ShoppingDatabaseContract.MainTableEntry.COL_MAIN_DATE, singleShoppingItem.getDate().getTime());
         contentValues.put(ShoppingDatabaseContract.MainTableEntry.COL_MAIN_PRICE, String.valueOf(singleShoppingItem.getPrice()));
-        contentValues.put(ShoppingDatabaseContract.MainTableEntry.COL_PRODUCT_BARCODE, singleShoppingItem.getProduct().getBarCode());
-        contentValues.put(ShoppingDatabaseContract.MainTableEntry.COL_SHOP_IDENTIFIER, singleShoppingItem.getShop().getIdentifier());
+        contentValues.put(ShoppingDatabaseContract.MainTableEntry.COL_PRODUCT_ID, singleShoppingItem.getProduct().getId());
+        contentValues.put(ShoppingDatabaseContract.MainTableEntry.COL_SHOP_ID, singleShoppingItem.getShop().getId());
         long insertedRowID = new DbContentProvider().insert(ShoppingDatabaseContract.MainTableEntry.TABLE, contentValues);
         database.close();
         return insertedRowID;
@@ -216,7 +220,7 @@ public class ShoppingDatabaseDao implements IShoppingDatabaseDao {
     public int deleteShopping(Shopping singleShoppingItem) {
         database = dbHelper.getWritableDatabase();
         int deletedRowsQty = new DbContentProvider().delete(ShoppingDatabaseContract.MainTableEntry.TABLE, ShoppingDatabaseContract.MainTableEntry._ID + " = ?",
-                new String[]{singleShoppingItem.getId()});
+                new String[]{String.valueOf(singleShoppingItem.getId())});
         database.close();
         return deletedRowsQty;
     }
