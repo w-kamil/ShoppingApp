@@ -112,6 +112,16 @@ public class ShoppingDatabaseDao implements IShoppingDatabaseDao {
     }
 
     @Override
+    public int changeProductDescription(Product product, String newProductDescription) {
+        database = dbHelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(ShoppingDatabaseContract.ProductsEntry.COL_PRODUCTS_DESCRIPTION, newProductDescription);
+        int updatedRows = new DbContentProvider().update(ShoppingDatabaseContract.ProductsEntry.TABLE,
+                contentValues, ShoppingDatabaseContract.ProductsEntry._ID + " = ?", new String[]{String.valueOf(product.getId())});
+        return updatedRows;
+    }
+
+    @Override
     public int deleteProduct(Product product) {
         database = dbHelper.getWritableDatabase();
         new DbContentProvider().delete(ShoppingDatabaseContract.MainTableEntry.TABLE, ShoppingDatabaseContract.MainTableEntry.COL_PRODUCT_ID + " = ?",

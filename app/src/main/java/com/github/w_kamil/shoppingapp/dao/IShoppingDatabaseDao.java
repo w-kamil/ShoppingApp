@@ -9,6 +9,7 @@ public interface IShoppingDatabaseDao {
     List<Shop> fetchAllShops();
     List<Shopping> fetchAllShoppingItemsMatchingSpecificProduct(Product productToSearch);
     long addProduct(Product product);
+    int changeProductDescription (Product product, String newProductDescription);
     int deleteProduct(Product product);
     long addShop(Shop shop);
     int renameShop (Shop shop, String newShopName);
