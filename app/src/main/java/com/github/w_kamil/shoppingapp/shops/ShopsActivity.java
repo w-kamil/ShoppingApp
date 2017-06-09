@@ -1,6 +1,5 @@
 package com.github.w_kamil.shoppingapp.shops;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -41,8 +40,6 @@ public class ShopsActivity extends AppCompatActivity implements PopupMenu.OnMenu
         recyclerView.addItemDecoration(new DividerItemDecoration(this,
                 LinearLayoutManager.VERTICAL));
 
-
-        //TODO implement presnter for providing data to ShopsActivity
         dao = new ShoppingDatabaseDao(this);
         updateUI();
     }
@@ -98,7 +95,6 @@ public class ShopsActivity extends AppCompatActivity implements PopupMenu.OnMenu
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-        //TODO implement shopdeleting and move products in shop to list onitemclickliestener
         switch (item.getItemId()) {
             case R.id.show_products_in_shop:
                 gotoProductstActivity(selectedShopEntry);

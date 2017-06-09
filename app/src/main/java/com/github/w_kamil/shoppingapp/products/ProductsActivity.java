@@ -64,8 +64,6 @@ public class ProductsActivity extends AppCompatActivity implements PopupMenu.OnM
         singleShopToShow = getIntent().getExtras().getParcelable(SINGLE_SHOP_TO_SHOW_KEY);
         dao = new ShoppingDatabaseDao(this);
 
-        //TODO implement presnter for providing data to ProductsActivity
-
         updateUI();
     }
 
@@ -79,7 +77,6 @@ public class ProductsActivity extends AppCompatActivity implements PopupMenu.OnM
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        //TODO implement list settings/filtering
         switch (item.getItemId()) {
             case R.id.scan_product:
                 startScanner();
@@ -94,7 +91,6 @@ public class ProductsActivity extends AppCompatActivity implements PopupMenu.OnM
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-        //TODO implement popup menu options and move shopping history (single product activity) to onitemclicklistener
         switch (item.getItemId()) {
             case R.id.show_shopping_history:
                 gotoSingleProductActivity(searchedProductBarcode);

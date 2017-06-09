@@ -3,9 +3,11 @@ package com.github.w_kamil.shoppingapp.dao;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
-public class Shop implements Parcelable {
+public class Shop implements Parcelable, Comparable<Shop> {
 
+    private int id;
     private String identifier;
     private String address;
 
@@ -14,26 +16,34 @@ public class Shop implements Parcelable {
         this.address = address;
     }
 
+    public Shop(int id, String identifier, String address) {
+        this.id = id;
+        this.identifier = identifier;
+        this.address = address;
+    }
+
     public Shop(Parcel in) {
-        String[] data = new String[2];
 
-        in.readStringArray(data);
         // the order needs to be the same as in writeToParcel() method
-        this.identifier = data[0];
-        this.address = data[1];
+        this.id = in.readInt();
+        this.identifier = in.readString();
+        this.address = in.readString();
+    }
 
+    public int getId() {
+        return id;
     }
 
     public String getIdentifier() {
         return identifier;
     }
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
-    }
-
     public String getAddress() {
         return address;
+    }
+
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
     }
 
     public void setAddress(String address) {
@@ -52,10 +62,12 @@ public class Shop implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeStringArray(new String[]{this.identifier, this.address});
+        dest.writeInt(id);
+        dest.writeString(identifier);
+        dest.writeString(address);
     }
 
-    public static final Parcelable.Creator CREATOR = new Parcelable.Creator(){
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
         public Shop createFromParcel(Parcel in) {
             return new Shop(in);
         }
@@ -64,4 +76,9 @@ public class Shop implements Parcelable {
             return new Shop[size];
         }
     };
+
+    @Override
+    public int compareTo(@NonNull Shop o) {
+        return this.identifier.compareTo(o.identifier);
+    }
 }

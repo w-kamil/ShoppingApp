@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 
 public class Product implements Parcelable, Comparable<Product> {
 
+    private int id;
     private final String barCode;
     private String description;
 
@@ -16,14 +17,22 @@ public class Product implements Parcelable, Comparable<Product> {
         this.description = description;
     }
 
+    public Product(int id, String barCode, String description) {
+        this.id = id;
+        this.barCode = barCode;
+        this.description = description;
+    }
+
     public Product(Parcel in) {
-        String[] data = new String[2];
-
-        in.readStringArray(data);
         // the order needs to be the same as in writeToParcel() method
-        this.barCode = data[0];
-        this.description = data[1];
+        this.id = in.readInt();
+        this.barCode = in.readString();
+        this.description = in.readString();
 
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getBarCode() {
@@ -38,6 +47,10 @@ public class Product implements Parcelable, Comparable<Product> {
         this.description = description;
     }
 
+    @Override
+    public String toString() {
+        return description + " - " + barCode;
+    }
 
     @Override
     public int describeContents() {
@@ -46,7 +59,9 @@ public class Product implements Parcelable, Comparable<Product> {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeStringArray(new String[]{this.barCode, this.description});
+        dest.writeInt(id);
+        dest.writeString(barCode);
+        dest.writeString(description);
     }
 
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
