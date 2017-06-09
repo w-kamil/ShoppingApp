@@ -7,7 +7,7 @@ import java.util.Date;
 public class Shopping {
 
 
-    private String id;
+    private int id;
     private Product product;
     private Shop shop;
     private Date date;
@@ -21,7 +21,7 @@ public class Shopping {
         this.price = price;
     }
 
-    public Shopping(String id, Product product, Shop shop, Date date, BigDecimal price) {
+    public Shopping(int id, Product product, Shop shop, Date date, BigDecimal price) {
         this.id = id;
         this.product = product;
         this.shop = shop;
@@ -29,7 +29,7 @@ public class Shopping {
         this.price = price;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
