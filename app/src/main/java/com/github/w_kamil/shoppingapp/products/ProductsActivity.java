@@ -119,8 +119,9 @@ public class ProductsActivity extends AppCompatActivity implements PopupMenu.OnM
                 Toast.makeText(this, R.string.scan_cancelled, Toast.LENGTH_SHORT).show();
             } else {
                 scanResult = intentResult.getContents();
-                if (dao.searchProduct(Integer.parseInt(scanResult)) != null) {
-                    gotoSingleProductActivity(searchedProduct);
+                Product scannedProduct = dao.searchProductByBarcode(scanResult);
+                if (scannedProduct != null) {
+                    gotoSingleProductActivity(scannedProduct);
                 } else {
                     AlertDialog createNewProductDialog = new AlertDialog.Builder(this)
                             .setTitle(String.format(getString(R.string.product_is_not_in_database), scanResult))
