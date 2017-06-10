@@ -28,7 +28,6 @@
     <string name="scan_product">Skanuj produkt</string>
     <string name="scan_product_upper_case">SKANUJ PRODUKT</string>
     <string name="settings">Ustawienia</string>
-    <string name="shop_name_already_exists"> już istnieje w bazie. Podaj inną nazwę sklepu</string>
     <string name="shopping_history">Historia zakupów produktu</string>
     <string name="shops_list">LISTA SKLEPÓW</string>
     <string name="show_products_list_in_shop">Lista produktów dostępnych w sklepie</string>

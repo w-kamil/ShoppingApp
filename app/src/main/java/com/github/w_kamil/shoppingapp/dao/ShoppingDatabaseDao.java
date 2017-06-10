@@ -6,7 +6,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -49,11 +48,13 @@ public class ShoppingDatabaseDao implements IShoppingDatabaseDao {
         database = dbHelper.getReadableDatabase();
         cursor = new DbContentProvider().query(ShoppingDatabaseContract.MainTableEntry.TABLE, new String[]{ShoppingDatabaseContract.MainTableEntry.COL_PRODUCT_ID},
                 ShoppingDatabaseContract.MainTableEntry.COL_SHOP_ID + " = ?", new String[]{String.valueOf(shopToSearch.getId())});
-        List<Product> productsList = new ArrayList<>();
-        while (cursor.moveToNext()) productsList.add(searchProduct(cursor.getInt(0)));
+        Set<Product> productsSet = new TreeSet<>();
+        while (cursor.moveToNext()){
+            productsSet.add(searchProduct(cursor.getInt(0)));
+        }
         cursor.close();
         database.close();
-        return productsList;
+        return new ArrayList<>(productsSet);
     }
 
     @Override

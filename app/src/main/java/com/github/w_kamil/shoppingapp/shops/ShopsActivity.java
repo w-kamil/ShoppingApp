@@ -76,13 +76,9 @@ public class ShopsActivity extends AppCompatActivity implements PopupMenu.OnMenu
                             Toast.makeText(this, getResources().getString(R.string.enter_shop_address), Toast.LENGTH_SHORT).show();
                         } else {
                             Shop shopToAdd = new Shop(shopNameEditText.getText().toString(), shopAddressEditText.getText().toString());
-                            if (dao.searchShop(shopToAdd.getId()) != null) {
-                                Toast.makeText(this, shopToAdd.getIdentifier() + " " + getString(R.string.shop_name_already_exists), Toast.LENGTH_LONG).show();
-                            } else {
-                                dao.addShop(shopToAdd);
-                                updateUI();
-                                addNewShopDialog.dismiss();
-                            }
+                            dao.addShop(shopToAdd);
+                            updateUI();
+                            addNewShopDialog.dismiss();
                         }
                     });
                 });
