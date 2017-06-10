@@ -9,7 +9,6 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,16 +21,13 @@ import com.github.w_kamil.shoppingapp.R;
 import com.github.w_kamil.shoppingapp.dao.IShoppingDatabaseDao;
 import com.github.w_kamil.shoppingapp.dao.Product;
 import com.github.w_kamil.shoppingapp.dao.Shop;
-import com.github.w_kamil.shoppingapp.dao.Shopping;
 import com.github.w_kamil.shoppingapp.dao.ShoppingDatabaseDao;
 import com.github.w_kamil.shoppingapp.singleProduct.SingleProductActivity;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.TreeSet;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

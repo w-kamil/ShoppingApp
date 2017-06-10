@@ -6,6 +6,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -49,12 +50,10 @@ public class ShoppingDatabaseDao implements IShoppingDatabaseDao {
         cursor = new DbContentProvider().query(ShoppingDatabaseContract.MainTableEntry.TABLE, new String[]{ShoppingDatabaseContract.MainTableEntry.COL_PRODUCT_ID},
                 ShoppingDatabaseContract.MainTableEntry.COL_SHOP_ID + " = ?", new String[]{String.valueOf(shopToSearch.getId())});
         List<Product> productsList = new ArrayList<>();
-        while (cursor.moveToNext()) {
-            productsList.add(searchProduct(cursor.getInt(0)));
-        }
+        while (cursor.moveToNext()) productsList.add(searchProduct(cursor.getInt(0)));
         cursor.close();
         database.close();
-        return null;
+        return productsList;
     }
 
     @Override
@@ -179,7 +178,7 @@ public class ShoppingDatabaseDao implements IShoppingDatabaseDao {
         database = dbHelper.getReadableDatabase();
         Cursor cursor = new DbContentProvider().query(ShoppingDatabaseContract.ProductsEntry.TABLE, null,
                 ShoppingDatabaseContract.ProductsEntry._ID + " = ?", new String[]{String.valueOf(productToSearchId)});
-        if (cursor.moveToNext()) {
+        if (cursor.moveToFirst()) {
             int indexProductBarcode = cursor.getColumnIndex(ShoppingDatabaseContract.ProductsEntry.COL_PRODUUCTS_BARCODE);
             String productBarcode = cursor.getString(indexProductBarcode);
             int indexDescription = cursor.getColumnIndex(ShoppingDatabaseContract.ProductsEntry.COL_PRODUCTS_DESCRIPTION);
@@ -198,7 +197,7 @@ public class ShoppingDatabaseDao implements IShoppingDatabaseDao {
         database = dbHelper.getReadableDatabase();
         Cursor cursor = new DbContentProvider().query(ShoppingDatabaseContract.ProductsEntry.TABLE, null,
                 ShoppingDatabaseContract.ProductsEntry.COL_PRODUUCTS_BARCODE + " = ?", new String[]{barcode});
-        if (cursor.moveToNext()) {
+        if (cursor.moveToFirst()) {
             int indexId = cursor.getColumnIndex(ShoppingDatabaseContract.ProductsEntry._ID);
             int id = cursor.getInt(indexId);
             int indexDescription = cursor.getColumnIndex(ShoppingDatabaseContract.ProductsEntry.COL_PRODUCTS_DESCRIPTION);
@@ -217,7 +216,7 @@ public class ShoppingDatabaseDao implements IShoppingDatabaseDao {
         database = dbHelper.getReadableDatabase();
         Cursor cursor = new DbContentProvider().query(ShoppingDatabaseContract.ShopsEntry.TABLE, null,
                 ShoppingDatabaseContract.ShopsEntry._ID + " = ?", new String[]{String.valueOf(shopToSearchId)});
-        if (cursor.moveToNext()) {
+        if (cursor.moveToFirst()) {
             int indexShopIdentifier = cursor.getColumnIndex(ShoppingDatabaseContract.ShopsEntry.COL_SHOP_IDENTIFIER);
             String shopIdentifier = cursor.getString(indexShopIdentifier);
             int indexShopAddress = cursor.getColumnIndex(ShoppingDatabaseContract.ShopsEntry.COL_SHOP_ADDRESS);
