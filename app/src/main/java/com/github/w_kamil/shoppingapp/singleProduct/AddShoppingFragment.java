@@ -2,6 +2,7 @@ package com.github.w_kamil.shoppingapp.singleProduct;
 
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -9,10 +10,12 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.w_kamil.shoppingapp.R;
 import com.github.w_kamil.shoppingapp.dao.Product;
@@ -81,7 +84,7 @@ public class AddShoppingFragment extends DialogFragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         shopsSpinner.setAdapter(adapter);
 
-        builder.setTitle(R.string.add_shopping_entry)
+        AlertDialog alertDialog = builder.setTitle(R.string.add_shopping_entry)
                 .setPositiveButton(getString(R.string.add), (dialog, which) -> {
                     Shop shop = (Shop) shopsSpinner.getSelectedItem();
                     Calendar cal = Calendar.getInstance();
@@ -94,8 +97,33 @@ public class AddShoppingFragment extends DialogFragment {
                     dao.addShopping(shoppingToAdd);
                     shoppingListUpdater.updateUI();
                 })
-                .setNegativeButton(R.string.cancel, null);
-        return builder.create();
+                .setNegativeButton(R.string.cancel, null).create();
+
+        alertDialog.setOnShowListener(dialog -> {
+            Button positiveButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+            positiveButton.setOnClickListener(v -> {
+                if (shopsSpinner.getSelectedItem() == null) {
+                    Toast.makeText(getActivity(), getResources().getString(R.string.enter_shop_name), Toast.LENGTH_SHORT).show();
+                } else if (priceEditText.getText().length() == 0) {
+                    Toast.makeText(getActivity(), getResources().getString(R.string.enter_price), Toast.LENGTH_SHORT).show();
+                } else {
+                    Shop shop = (Shop) shopsSpinner.getSelectedItem();
+                    Calendar cal = Calendar.getInstance();
+                    cal.set(Calendar.YEAR, datePicker.getYear());
+                    cal.set(Calendar.MONTH, datePicker.getMonth());
+                    cal.set(Calendar.DAY_OF_MONTH, datePicker.getDayOfMonth());
+                    Date choosenDate = cal.getTime();
+                    BigDecimal price = new BigDecimal(priceEditText.getText().toString());
+                    Shopping shoppingToAdd = new Shopping(product, shop, choosenDate, price);
+                    dao.addShopping(shoppingToAdd);
+                    shoppingListUpdater.updateUI();
+                    alertDialog.dismiss();
+                    alertDialog.dismiss(); }
+            });
+        });
+
+
+        return alertDialog;
     }
 
     public void setShoppingListUpdater(ShoppingListUpdater shoppingListUpdater) {

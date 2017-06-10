@@ -100,7 +100,6 @@ public class ShopsActivity extends AppCompatActivity implements PopupMenu.OnMenu
                 gotoProductstActivity(selectedShopEntry);
                 break;
             case R.id.rename_shop_identifier:
-//                View dialogLayout = inflateUpdatingDialogLayout();
                 AlertDialog renameShopDialog = new AlertDialog.Builder(this).
                         setTitle(R.string.enter_new_shop_name).
                         setView(inflateUpdatingDialogLayout()).
@@ -111,7 +110,7 @@ public class ShopsActivity extends AppCompatActivity implements PopupMenu.OnMenu
                     Button positiveButton = renameShopDialog.getButton(AlertDialog.BUTTON_POSITIVE);
                     final EditText shopNameEditText = (EditText) renameShopDialog.findViewById(R.id.data_edit_text);
                     positiveButton.setOnClickListener(v -> {
-                        if(shopNameEditText.getText().length() == 0){
+                        if (shopNameEditText.getText().length() == 0) {
                             Toast.makeText(this, getResources().getString(R.string.enter_shop_name), Toast.LENGTH_SHORT).show();
                         } else {
                             dao.renameShop(selectedShopEntry, shopNameEditText.getText().toString());
@@ -123,7 +122,6 @@ public class ShopsActivity extends AppCompatActivity implements PopupMenu.OnMenu
                 renameShopDialog.show();
                 break;
             case R.id.change_shop_address:
-//                View dialogLayout = inflateUpdatingDialogLayout();
                 AlertDialog changeShopAddressDialog = new AlertDialog.Builder(this).
                         setTitle(R.string.exner_new_shop_address).
                         setView(inflateUpdatingDialogLayout()).
@@ -134,7 +132,7 @@ public class ShopsActivity extends AppCompatActivity implements PopupMenu.OnMenu
                     Button positiveButton = changeShopAddressDialog.getButton(AlertDialog.BUTTON_POSITIVE);
                     final EditText shopAddressEditText = (EditText) changeShopAddressDialog.findViewById(R.id.data_edit_text);
                     positiveButton.setOnClickListener(v -> {
-                        if(shopAddressEditText.getText().length() == 0){
+                        if (shopAddressEditText.getText().length() == 0) {
                             Toast.makeText(this, getResources().getString(R.string.enter_shop_address), Toast.LENGTH_SHORT).show();
                         } else {
                             dao.changeShopAddress(selectedShopEntry, shopAddressEditText.getText().toString());
@@ -146,7 +144,7 @@ public class ShopsActivity extends AppCompatActivity implements PopupMenu.OnMenu
                 changeShopAddressDialog.show();
                 break;
             case R.id.delete_shop:
-             
+
                 dao.deleteShop(selectedShopEntry);
                 updateUI();
                 break;
