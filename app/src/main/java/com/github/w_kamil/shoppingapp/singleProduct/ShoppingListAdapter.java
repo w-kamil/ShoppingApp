@@ -4,7 +4,6 @@ package com.github.w_kamil.shoppingapp.singleProduct;
 import android.content.Context;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +13,11 @@ import android.widget.TextView;
 import com.github.w_kamil.shoppingapp.R;
 import com.github.w_kamil.shoppingapp.dao.Shopping;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapter.MyVieHolder> {
 
@@ -41,12 +43,13 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
     @Override
     public void onBindViewHolder(ShoppingListAdapter.MyVieHolder holder, int position) {
         Shopping shopping = shoppingList.get(position);
-        Log.d("zakup do listy", shopping.getProduct().getBarCode().toString());
         holder.productName.setText(shopping.getProduct().getDescription());
         holder.productBarcode.setText(shopping.getProduct().getBarCode());
         holder.shopNameAndAddress.setText(shopping.getShop().getIdentifier() + ", " + shopping.getShop().getAddress());
-        holder.date.setText(shopping.getDate().toString());
-        holder.price.setText(shopping.getPrice().toString() + " " + holder.price.getContext().getString(R.string.currency));
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        String date = dateFormat.format(shopping.getDate());
+        holder.date.setText(date);
+        holder.price.setText(String.format("%1$,.2f", shopping.getPrice()) + " " + holder.price.getContext().getString(R.string.currency));
         holder.eventButton.setOnClickListener(v -> {
             PopupMenu popupMenu = new PopupMenu(holder.eventButton.getContext(), holder.eventButton);
             onSingleShoppingMenuItemClickListener.setShoppingEntry(shopping);
