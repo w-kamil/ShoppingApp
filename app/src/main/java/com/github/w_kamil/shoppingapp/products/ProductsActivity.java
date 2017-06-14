@@ -62,6 +62,11 @@ public class ProductsActivity extends AppCompatActivity implements PopupMenu.OnM
         updateUI();
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        updateUI();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
